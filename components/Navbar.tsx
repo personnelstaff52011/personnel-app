@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
@@ -11,11 +12,10 @@ import {
   Settings, 
   ShieldAlert, 
   ShieldCheck, 
-  Compass,
-  User,
-  LogOut,
-  LogIn,
-  SlidersHorizontal
+  User, 
+  LogOut, 
+  LogIn, 
+  SlidersHorizontal 
 } from 'lucide-react';
 import { isSupabaseConfigured } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
@@ -59,20 +59,27 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Brand Logo & Title */}
           <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-900 flex items-center justify-center text-amber-400 shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
-              <Compass className="w-5 h-5 sm:w-6 sm:h-6" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden bg-[#0e2617] p-0.5 shadow-md group-hover:scale-105 transition-transform flex-shrink-0 flex items-center justify-center border border-amber-500/30">
+              <Image
+                src="/icons/logo.png"
+                alt="Engineer Division Logo"
+                width={44}
+                height={44}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center space-x-1.5">
-                <span className="text-base sm:text-lg font-extrabold text-gray-900 leading-tight tracking-tight">
-                  ข้อมูลกำลังพล
+                <span className="text-sm sm:text-base font-extrabold text-gray-900 leading-tight tracking-tight">
+                  Engineer Division
                 </span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900">
-                  พล.ช.
+                <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-md bg-[#0e2617] text-amber-400 border border-amber-500/30">
+                  iPonchor
                 </span>
               </div>
-              <span className="text-xs text-gray-500 font-medium tracking-tight">
-                กองพลทหารช่าง (Engineer Division)
+              <span className="text-[11px] sm:text-xs text-gray-500 font-medium tracking-tight truncate max-w-[200px] sm:max-w-none">
+                Personnel Information System • กองพลทหารช่าง
               </span>
             </div>
           </Link>

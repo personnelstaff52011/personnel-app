@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { 
-  Compass, 
   Lock, 
   CreditCard, 
   ArrowRight, 
-  AlertCircle,
-  Loader2,
-  ShieldCheck,
-  Info
+  AlertCircle, 
+  Loader2, 
+  ShieldCheck, 
+  Info 
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -59,14 +59,24 @@ export default function LoginPage() {
         
         {/* Brand Header */}
         <div className="text-center space-y-2.5">
-          <div className="w-16 h-16 rounded-2xl bg-slate-900 text-amber-400 flex items-center justify-center mx-auto shadow-md">
-            <Compass className="w-9 h-9" />
+          <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#0e2617] p-1 mx-auto shadow-lg border border-amber-500/40 flex items-center justify-center">
+            <Image
+              src="/icons/logo.png"
+              alt="Engineer Division Logo"
+              width={80}
+              height={80}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-            เข้าสู่ระบบสารสนเทศกำลังพล
+          <div className="inline-block px-2.5 py-0.5 rounded-full bg-[#0e2617] text-amber-400 text-xs font-bold border border-amber-500/30">
+            iPonchor
+          </div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+            Engineer Division
           </h1>
-          <p className="text-sm text-gray-500 font-medium">
-            กองพลทหารช่าง (Engineer Division)
+          <p className="text-xs sm:text-sm text-gray-500 font-medium">
+            Personnel Information System • กองพลทหารช่าง
           </p>
         </div>
 
