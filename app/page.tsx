@@ -60,21 +60,21 @@ export default function DashboardPage() {
       {/* Mobile-First Header Card */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 rounded-3xl p-5 sm:p-7 text-white shadow-lg relative overflow-hidden">
         <div className="relative z-10">
-          <div className="flex items-center justify-between mb-2">
-            <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+          <div className="flex items-center justify-between mb-2.5 flex-wrap gap-2">
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
               <span>กองพลทหารช่าง • Engineer Division</span>
             </div>
 
             {/* Current Role Badge */}
-            <div className="text-[11px] font-semibold text-slate-300 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/10">
+            <div className="text-xs font-bold text-slate-200 bg-white/10 px-3 py-1 rounded-full border border-white/10">
               {isAdmin ? '🛡️ ผู้ดูแลระบบ (Admin)' : '👤 ผู้ใช้งานทั่วไป (User)'}
             </div>
           </div>
 
-          <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             ระบบสารสนเทศข้อมูลกำลังพล
           </h1>
-          <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
+          <p className="text-slate-200 text-sm sm:text-base mt-1.5 max-w-xl leading-relaxed">
             สถิติกำลังพล ความพร้อมทางการแพทย์ และการกระจายตัวตามกองร้อย
           </p>
 
@@ -84,16 +84,16 @@ export default function DashboardPage() {
               <>
                 <Link
                   href="/personnel/new"
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition-transform active:scale-95 flex-shrink-0"
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition-transform active:scale-95 flex-shrink-0"
                 >
-                  <UserPlus className="w-3.5 h-3.5" />
+                  <UserPlus className="w-4 h-4" />
                   <span>เพิ่มกำลังพล</span>
                 </Link>
                 <Link
                   href="/personnel/import"
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs sm:text-sm backdrop-blur-sm border border-white/20 transition-transform active:scale-95 flex-shrink-0"
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-sm border border-white/20 transition-transform active:scale-95 flex-shrink-0"
                 >
-                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+                  <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
                   <span>นำเข้า Excel</span>
                 </Link>
               </>
@@ -101,16 +101,16 @@ export default function DashboardPage() {
               <>
                 <Link
                   href="/personnel"
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition-transform active:scale-95 flex-shrink-0"
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition-transform active:scale-95 flex-shrink-0"
                 >
-                  <Users className="w-3.5 h-3.5" />
+                  <Users className="w-4 h-4" />
                   <span>ดูทำเนียบกำลังพล</span>
                 </Link>
                 <Link
                   href="/settings/profile"
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs sm:text-sm backdrop-blur-sm border border-white/20 transition-transform active:scale-95 flex-shrink-0"
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-sm border border-white/20 transition-transform active:scale-95 flex-shrink-0"
                 >
-                  <User className="w-3.5 h-3.5 text-blue-400" />
+                  <User className="w-4 h-4 text-blue-400" />
                   <span>ตั้งค่าผู้ใช้</span>
                 </Link>
               </>
@@ -118,10 +118,10 @@ export default function DashboardPage() {
 
             <button
               onClick={fetchData}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 active:scale-95 transition-transform flex-shrink-0 ml-auto"
+              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 active:scale-95 transition-transform flex-shrink-0 ml-auto"
               title="รีเฟรชข้อมูล"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
           </div>
         </div>
@@ -129,8 +129,8 @@ export default function DashboardPage() {
 
       {/* Supabase Notice Banner if in Demo mode */}
       {!isLiveSupabase && (
-        <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-3 sm:p-4 flex items-start space-x-2.5 text-amber-900 text-xs shadow-xs">
-          <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+        <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 flex items-start space-x-2.5 text-amber-900 text-xs sm:text-sm shadow-xs">
+          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1 leading-relaxed">
             <span className="font-bold">โหมดทดสอบข้อมูลจำลอง (Demo Mode):</span>{' '}
             ระบบทำงานผ่าน Local Sync ชั่วคราว ท่านสามารถทดสอบสลับระหว่างบัญชี Admin และ User ได้ในหน้าตั้งค่าผู้ใช้
@@ -185,10 +185,10 @@ export default function DashboardPage() {
         <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-sm font-bold text-gray-900">
+              <h2 className="text-base font-bold text-gray-900">
                 สัดส่วนกลุ่มเลือด (Medical)
               </h2>
-              <p className="text-[11px] text-gray-400">
+              <p className="text-xs text-gray-500">
                 A, B, O, AB สำหรับการส่งกำลังทางการแพทย์
               </p>
             </div>
@@ -200,14 +200,14 @@ export default function DashboardPage() {
         <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs lg:col-span-2">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-sm font-bold text-gray-900">
+              <h2 className="text-base font-bold text-gray-900">
                 กำลังพลแยกตามส่วนงาน/กองร้อย
               </h2>
-              <p className="text-[11px] text-gray-400">
+              <p className="text-xs text-gray-500">
                 Company & Department Distribution
               </p>
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md">
+            <span className="text-xs font-bold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg">
               {deptStats.length} ส่วนงาน
             </span>
           </div>
@@ -221,10 +221,10 @@ export default function DashboardPage() {
         <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-sm font-bold text-gray-900">
+              <h2 className="text-base font-bold text-gray-900">
                 สัดส่วนชั้นยศ (Rank)
               </h2>
-              <p className="text-[11px] text-gray-400">
+              <p className="text-xs text-gray-500">
                 แยกตามชั้นยศทหารช่าง
               </p>
             </div>
@@ -237,19 +237,19 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-3">
               <div>
-                <h2 className="text-sm font-bold text-gray-900">
+                <h2 className="text-base font-bold text-gray-900">
                   กำลังพลล่าสุดในระบบ
                 </h2>
-                <p className="text-[11px] text-gray-400">
+                <p className="text-xs text-gray-500">
                   แตะเพื่อดูโปรไฟล์หรือโทรด่วน
                 </p>
               </div>
               <Link
                 href="/personnel"
-                className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+                className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-1"
               >
                 <span>ดูทั้งหมด</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
@@ -257,16 +257,16 @@ export default function DashboardPage() {
               {personnelList.slice(0, 5).map((p) => {
                 const cleanPhone = p.phone_number ? p.phone_number.replace(/[^0-9]/g, '') : '';
                 return (
-                  <div key={p.id} className="py-2.5 flex items-center justify-between hover:bg-slate-50 px-2 rounded-xl transition-colors">
-                    <Link href={`/personnel/${p.id}`} className="flex items-center space-x-2.5 min-w-0 flex-1">
-                      <span className="w-6 h-6 rounded-lg bg-slate-900 text-amber-400 text-[11px] font-extrabold flex items-center justify-center flex-shrink-0">
+                  <div key={p.id} className="py-3 flex items-center justify-between hover:bg-slate-50 px-2 rounded-xl transition-colors">
+                    <Link href={`/personnel/${p.id}`} className="flex items-center space-x-3 min-w-0 flex-1">
+                      <span className="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 text-xs font-extrabold flex items-center justify-center flex-shrink-0">
                         {p.seq_no}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-bold text-gray-900 truncate block">
+                        <span className="text-sm sm:text-base font-bold text-gray-900 truncate block">
                           {p.full_name_th} {p.nickname ? `(${p.nickname})` : ''}
                         </span>
-                        <span className="text-[10px] text-gray-400 truncate block">
+                        <span className="text-xs text-gray-500 truncate block">
                           {p.department || 'ไม่ระบุสังกัด'}
                         </span>
                       </div>
@@ -274,17 +274,17 @@ export default function DashboardPage() {
 
                     <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
                       {p.blood_group && (
-                        <span className="text-[10px] font-extrabold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full border border-red-100">
+                        <span className="text-xs font-extrabold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
                           {p.blood_group}
                         </span>
                       )}
                       {cleanPhone && (
                         <a
                           href={`tel:${cleanPhone}`}
-                          className="p-1.5 rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
+                          className="p-2 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
                           title={`โทร ${p.phone_number}`}
                         >
-                          <Phone className="w-3.5 h-3.5 fill-emerald-600" />
+                          <Phone className="w-4 h-4 fill-emerald-600" />
                         </a>
                       )}
                     </div>
@@ -297,10 +297,10 @@ export default function DashboardPage() {
           <div className="pt-3 border-t border-gray-100 mt-3 text-center">
             <Link
               href="/personnel"
-              className="inline-flex items-center justify-center space-x-1.5 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all active:scale-[0.99]"
+              className="inline-flex items-center justify-center space-x-2 w-full py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition-all active:scale-[0.99]"
             >
               <span>เปิดดูทำเนียบกำลังพลทั้งหมด ({personnelList.length} นาย)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

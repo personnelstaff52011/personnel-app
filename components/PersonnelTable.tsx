@@ -27,7 +27,7 @@ export default function PersonnelTable({
     <div className="bg-white rounded-xl border border-gray-200/90 shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm text-gray-700">
-          <thead className="bg-slate-50 border-b border-gray-200 text-xs uppercase font-semibold text-gray-600">
+          <thead className="bg-slate-50 border-b border-gray-200 text-xs sm:text-sm font-bold text-gray-700">
             <tr>
               <th scope="col" className="px-4 py-3.5 text-center w-14">ลำดับ</th>
               <th scope="col" className="px-3 py-3.5 w-16">รูปถ่าย</th>
@@ -44,14 +44,14 @@ export default function PersonnelTable({
               <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
                 {/* Sequence No */}
                 <td className="px-4 py-3 text-center font-bold text-gray-800">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-slate-800 text-xs font-bold">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-xl bg-slate-100 text-slate-800 text-xs font-extrabold">
                     {p.seq_no}
                   </span>
                 </td>
 
                 {/* Avatar */}
                 <td className="px-3 py-3">
-                  <div className="relative w-10 h-12 rounded-md overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0">
+                  <div className="relative w-10 h-12 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0">
                     {p.photo_url ? (
                       <img
                         src={p.photo_url}
@@ -67,12 +67,12 @@ export default function PersonnelTable({
 
                 {/* Names */}
                 <td className="px-4 py-3">
-                  <div className="font-semibold text-gray-900 flex items-center space-x-1.5">
+                  <div className="text-sm sm:text-base font-bold text-gray-900 flex items-center space-x-1.5">
                     <Link href={`/personnel/${p.id}`} className="hover:text-blue-600 transition-colors">
                       {p.full_name_th}
                     </Link>
                     {p.nickname && (
-                      <span className="text-xs text-gray-500 font-normal">
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">
                         ({p.nickname})
                       </span>
                     )}
@@ -83,21 +83,21 @@ export default function PersonnelTable({
                 </td>
 
                 {/* Positions */}
-                <td className="px-4 py-3 text-xs">
+                <td className="px-4 py-3 text-xs sm:text-sm">
                   <div className="text-gray-900 font-medium">
                     {p.regular_position || '-'}
                   </div>
                 </td>
 
                 {/* Department */}
-                <td className="px-4 py-3 text-xs text-gray-700 whitespace-nowrap">
+                <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 whitespace-nowrap">
                   {p.department || '-'}
                 </td>
 
                 {/* Blood Group */}
                 <td className="px-3 py-3 text-center whitespace-nowrap">
                   {p.blood_group ? (
-                    <span className="inline-block px-2 py-0.5 rounded text-xs font-bold bg-red-50 text-red-700 border border-red-200">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-red-50 text-red-700 border border-red-200">
                       {p.blood_group}
                     </span>
                   ) : (
@@ -106,13 +106,13 @@ export default function PersonnelTable({
                 </td>
 
                 {/* Phone */}
-                <td className="px-4 py-3 text-xs font-mono whitespace-nowrap">
+                <td className="px-4 py-3 text-xs sm:text-sm font-mono whitespace-nowrap">
                   {p.phone_number ? (
                     <a
                       href={`tel:${p.phone_number.replace(/[^0-9]/g, '')}`}
-                      className="text-gray-700 hover:text-emerald-700 flex items-center space-x-1"
+                      className="text-gray-700 hover:text-emerald-700 flex items-center space-x-1 font-semibold"
                     >
-                      <Phone className="w-3 h-3 text-emerald-600" />
+                      <Phone className="w-3.5 h-3.5 text-emerald-600" />
                       <span>{p.phone_number}</span>
                     </a>
                   ) : (

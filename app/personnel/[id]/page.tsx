@@ -140,20 +140,20 @@ export default function PersonnelDetailPage() {
     return (
       <div 
         onClick={() => valStr !== '-' && handleCopy(valStr, label)}
-        className="bg-white border border-gray-100 rounded-xl p-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-gray-300 transition-all cursor-pointer relative group active:scale-[0.99]"
+        className="bg-white border border-gray-200/80 rounded-2xl p-3.5 sm:p-4 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-blue-300 transition-all cursor-pointer relative group active:scale-[0.99]"
       >
-        <div className="flex items-center justify-between mb-0.5">
-          <span className="text-[10px] sm:text-[11px] font-semibold text-gray-400 uppercase tracking-tight">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs font-bold text-gray-500 uppercase tracking-tight">
             {label}
           </span>
           {valStr !== '-' && (
             <span className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
-              {isCopied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
             </span>
           )}
         </div>
-        <div className="text-xs sm:text-sm font-bold text-gray-900 break-words flex items-center justify-between">
-          <span className={label === 'กลุ่มเลือด' ? 'text-red-600 font-extrabold' : ''}>
+        <div className="text-sm sm:text-base font-bold text-gray-900 break-words flex items-center justify-between">
+          <span className={label === 'กลุ่มเลือด' ? 'text-red-600 font-extrabold text-base sm:text-lg' : ''}>
             {valStr}
           </span>
         </div>
@@ -164,17 +164,17 @@ export default function PersonnelDetailPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-4 pb-28 md:pb-12">
       {/* 1. Mobile-friendly Top Navigation & Breadcrumb */}
-      <div className="flex items-center justify-between bg-white px-3.5 py-2.5 rounded-2xl border border-gray-200/90 shadow-xs">
+      <div className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-gray-200/90 shadow-xs">
         <Link 
           href="/personnel" 
-          className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors p-1"
+          className="inline-flex items-center space-x-2 text-sm font-bold text-slate-800 hover:text-blue-600 transition-colors p-1"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-5 h-5" />
           <span>รายชื่อทั้งหมด</span>
         </Link>
-        <div className="flex items-center space-x-1 text-xs text-gray-400">
+        <div className="flex items-center space-x-1.5 text-sm text-gray-500">
           <span>ลำดับ</span>
-          <span className="font-extrabold text-slate-900 bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md font-mono text-[11px]">
+          <span className="font-extrabold text-slate-900 bg-amber-100 text-amber-900 px-3 py-1 rounded-lg font-mono text-xs">
             No. {personnel.seq_no}
           </span>
         </div>
@@ -186,7 +186,7 @@ export default function PersonnelDetailPage() {
         {/* 2. Centered Profile Header */}
         <div className="flex flex-col items-center text-center">
           {/* Rounded portrait photo */}
-          <div className="relative w-32 h-44 sm:w-44 sm:h-56 rounded-2xl overflow-hidden bg-gray-100 border-4 border-white shadow-lg flex items-center justify-center mb-3 ring-1 ring-gray-200">
+          <div className="relative w-36 h-48 sm:w-48 sm:h-64 rounded-3xl overflow-hidden bg-gray-100 border-4 border-white shadow-xl flex items-center justify-center mb-3.5 ring-2 ring-gray-100">
             {personnel.photo_url ? (
               <Image
                 src={personnel.photo_url}
@@ -198,26 +198,26 @@ export default function PersonnelDetailPage() {
               />
             ) : (
               <div className="flex flex-col items-center justify-center text-gray-400 p-4">
-                <User className="w-14 h-14" />
-                <span className="text-[10px] text-gray-400 mt-1">ไม่มีรูปถ่าย</span>
+                <User className="w-16 h-16" />
+                <span className="text-xs text-gray-400 mt-1.5 font-medium">ไม่มีรูปถ่าย</span>
               </div>
             )}
           </div>
 
           {/* Large Sequence Number (seq_no) */}
-          <div className="inline-flex items-center justify-center min-w-[2.75rem] h-9 px-3 rounded-xl bg-slate-900 text-amber-400 font-extrabold text-lg shadow-xs mb-1.5">
+          <div className="inline-flex items-center justify-center min-w-[3.25rem] h-10 px-4 rounded-xl bg-slate-900 text-amber-400 font-extrabold text-xl shadow-xs mb-2">
             {personnel.seq_no}
           </div>
 
           {/* Thai Rank & Full Name */}
-          <h1 className="text-lg sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
             {personnel.full_name_th}
           </h1>
 
           {/* Nickname */}
           {personnel.nickname && (
-            <div className="mt-1 text-xs sm:text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-0.5 rounded-full inline-block">
-              ชื่อเล่น: <span className="text-gray-900 font-bold">{personnel.nickname}</span>
+            <div className="mt-1.5 text-sm sm:text-base font-semibold text-gray-700 bg-gray-100 px-4 py-1 rounded-full inline-block">
+              ชื่อเล่น: <span className="text-gray-950 font-extrabold">{personnel.nickname}</span>
             </div>
           )}
         </div>
@@ -227,9 +227,9 @@ export default function PersonnelDetailPage() {
 
         {/* Admin Quick Link to Display Fields Settings */}
         {isAdmin && (
-          <div className="mb-4 flex items-center justify-between bg-slate-50 border border-slate-200/90 rounded-2xl px-3.5 py-2 text-xs">
-            <div className="flex items-center space-x-1.5 text-slate-700 font-bold">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600" />
+          <div className="mb-4 flex items-center justify-between bg-slate-50 border border-slate-200/90 rounded-2xl px-4 py-2.5 text-xs sm:text-sm">
+            <div className="flex items-center space-x-2 text-slate-800 font-bold">
+              <SlidersHorizontal className="w-4 h-4 text-blue-600" />
               <span>การ์ดฟิลด์ข้อมูลที่เปิดแสดงผล</span>
             </div>
             <Link
@@ -237,13 +237,13 @@ export default function PersonnelDetailPage() {
               className="text-blue-600 hover:text-blue-800 font-bold flex items-center space-x-1"
             >
               <span>ตั้งค่าเปิด/ปิดการ์ดฟิลด์</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
         )}
 
         {/* 3. Detailed Grid Layout: Only render visible field cards */}
-        <div className="space-y-3">
+        <div className="space-y-3 sm:space-y-4">
           {/* แถวที่ 1: RANK (EN), NAME (EN), LASTNAME (EN), หมายเลขประจำตัว */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
             {isFieldVisible('rank_en') && <GridItem label="RANK (EN)" value={personnel.rank_en} />}

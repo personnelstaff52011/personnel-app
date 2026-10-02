@@ -169,11 +169,11 @@ export default function PersonnelDirectoryPage() {
       {/* Top Title & Header Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight flex items-center space-x-2">
-            <Users className="w-6 h-6 text-slate-800 flex-shrink-0" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight flex items-center space-x-2.5">
+            <Users className="w-7 h-7 text-slate-800 flex-shrink-0" />
             <span>ทำเนียบกำลังพล กองพลทหารช่าง</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
             ค้นหา ตรวจสอบข้อมูล และโทรติดต่อได้ทันที
           </p>
         </div>
@@ -183,24 +183,24 @@ export default function PersonnelDirectoryPage() {
           <div className="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
             <button
               onClick={handleExportExcel}
-              className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-gray-200 text-xs font-semibold shadow-xs transition-all active:scale-95 flex-shrink-0"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-gray-200 text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-95 flex-shrink-0"
             >
-              <Download className="w-3.5 h-3.5 text-emerald-600" />
+              <Download className="w-4 h-4 text-emerald-600" />
               <span>ส่งออก Excel</span>
             </button>
 
             <Link
               href="/personnel/import"
-              className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-gray-200 text-xs font-semibold shadow-xs transition-all flex-shrink-0"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-gray-200 text-xs sm:text-sm font-semibold shadow-xs transition-all flex-shrink-0"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600" />
+              <FileSpreadsheet className="w-4 h-4 text-blue-600" />
               <span>นำเข้า Excel</span>
             </Link>
             <Link
               href="/personnel/new"
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs transition-all active:scale-95 flex-shrink-0"
+              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-95 flex-shrink-0"
             >
-              <UserPlus className="w-3.5 h-3.5 text-amber-400" />
+              <UserPlus className="w-4 h-4 text-amber-400" />
               <span>เพิ่มกำลังพล</span>
             </Link>
           </div>
@@ -208,24 +208,24 @@ export default function PersonnelDirectoryPage() {
       </div>
 
       {/* Sticky Mobile Search Bar */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-3 sm:p-4 shadow-xs space-y-3 sticky top-16 z-30">
+      <div className="bg-white rounded-3xl border border-gray-200 p-3.5 sm:p-4 shadow-xs space-y-3 sticky top-16 z-30">
         <div className="flex items-center gap-2">
           {/* Instant Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="ค้นหา: ชื่อ, รหัส, เลขประจำตัว, เบอร์..."
-              className="w-full pl-9 pr-8 py-2 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-gray-50/70"
+              placeholder="ค้นหา: ชื่อ, เลขทหาร, เลขประชาชน, เบอร์..."
+              className="w-full pl-10 pr-9 py-2.5 sm:py-3 rounded-2xl border border-gray-200 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-gray-50/70"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -234,7 +234,7 @@ export default function PersonnelDirectoryPage() {
           <button
             type="button"
             onClick={() => setShowFilters(!showFilters)}
-            className={`p-2 rounded-xl border text-xs font-semibold flex items-center space-x-1 transition-all ${
+            className={`p-2.5 sm:p-3 rounded-2xl border text-xs sm:text-sm font-bold flex items-center space-x-1.5 transition-all ${
               showFilters || hasActiveFilters
                 ? 'bg-blue-50 text-blue-700 border-blue-200'
                 : 'bg-white text-gray-600 border-gray-200'
@@ -248,11 +248,11 @@ export default function PersonnelDirectoryPage() {
           </button>
 
           {/* Table / Card View Toggle */}
-          <div className="flex items-center bg-gray-100 p-0.5 rounded-xl">
+          <div className="flex items-center bg-gray-100 p-1 rounded-2xl">
             <button
               type="button"
               onClick={() => setViewMode('card')}
-              className={`p-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`p-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                 viewMode === 'card'
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-gray-500 hover:text-gray-800'
@@ -264,7 +264,7 @@ export default function PersonnelDirectoryPage() {
             <button
               type="button"
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`p-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                 viewMode === 'table'
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-gray-500 hover:text-gray-800'
@@ -278,25 +278,25 @@ export default function PersonnelDirectoryPage() {
 
         {/* Active Filter Chips & Reset */}
         {hasActiveFilters && (
-          <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-100">
-            <div className="flex items-center space-x-1.5 text-[11px] text-gray-500 truncate">
+          <div className="flex items-center justify-between text-xs sm:text-sm pt-1.5 border-t border-gray-100">
+            <div className="flex items-center space-x-1.5 text-xs text-gray-600 truncate">
               <span>กำลังกรอง:</span>
               {filterDepartment !== 'ALL' && (
-                <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate">
+                <span className="bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-lg font-bold truncate">
                   {filterDepartment}
                 </span>
               )}
               {filterRank !== 'ALL' && (
-                <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium">
+                <span className="bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-lg font-bold">
                   {filterRank}
                 </span>
               )}
             </div>
             <button
               onClick={handleResetFilters}
-              className="inline-flex items-center space-x-1 text-[11px] text-red-600 hover:text-red-700 font-semibold px-2 py-0.5 rounded-md hover:bg-red-50 flex-shrink-0 transition-colors"
+              className="inline-flex items-center space-x-1 text-xs text-red-600 hover:text-red-700 font-bold px-2.5 py-1 rounded-lg hover:bg-red-50 flex-shrink-0 transition-colors"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span>ล้างตัวกรอง</span>
             </button>
           </div>
@@ -304,13 +304,13 @@ export default function PersonnelDirectoryPage() {
 
         {/* Expandable Advanced Filters */}
         {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-3 border-t border-gray-100 text-xs animate-in fade-in duration-150">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-gray-100 text-xs sm:text-sm animate-in fade-in duration-150">
             <div>
-              <label className="block text-gray-500 font-semibold mb-1">ส่วนงาน / กองร้อย</label>
+              <label className="block text-gray-700 font-bold mb-1">ส่วนงาน / กองร้อย</label>
               <select
                 value={filterDepartment}
                 onChange={(e) => setFilterDepartment(e.target.value)}
-                className="w-full py-2 px-3 rounded-lg border border-gray-200 bg-white text-gray-700 text-xs focus:ring-1 focus:ring-blue-500"
+                className="w-full py-2.5 px-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               >
                 <option value="ALL">ทั้งหมดทุกส่วนงาน</option>
                 {departmentOptions.map((dept) => (
@@ -322,11 +322,11 @@ export default function PersonnelDirectoryPage() {
             </div>
 
             <div>
-              <label className="block text-gray-500 font-semibold mb-1">ชั้นยศ (Rank EN)</label>
+              <label className="block text-gray-700 font-bold mb-1">ชั้นยศ (Rank EN)</label>
               <select
                 value={filterRank}
                 onChange={(e) => setFilterRank(e.target.value)}
-                className="w-full py-2 px-3 rounded-lg border border-gray-200 bg-white text-gray-700 text-xs focus:ring-1 focus:ring-blue-500"
+                className="w-full py-2.5 px-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               >
                 <option value="ALL">ทุกชั้นยศ</option>
                 {rankOptions.map((rank) => (
@@ -341,12 +341,12 @@ export default function PersonnelDirectoryPage() {
       </div>
 
       {/* Summary Status Counter */}
-      <div className="flex items-center justify-between text-xs text-gray-500 px-1">
+      <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 px-1">
         <span>
           พบกำลังพล <strong className="text-gray-900 font-bold">{filteredList.length}</strong> นาย (ทั้งหมด {personnelList.length} นาย)
         </span>
         {hasActiveFilters && (
-          <span className="text-amber-700 font-bold text-[11px] bg-amber-50 px-2 py-0.5 rounded-full">
+          <span className="text-amber-700 font-bold text-xs bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
             ตัวกรองทำงานอยู่
           </span>
         )}
@@ -356,7 +356,7 @@ export default function PersonnelDirectoryPage() {
       {loading ? (
         <div className="min-h-[30vh] flex flex-col items-center justify-center space-y-2">
           <Loader2 className="w-8 h-8 animate-spin text-slate-800" />
-          <p className="text-xs text-gray-400">กำลังโหลดข้อมูลกำลังพล...</p>
+          <p className="text-xs sm:text-sm text-gray-400">กำลังโหลดข้อมูลกำลังพล...</p>
         </div>
       ) : viewMode === 'card' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
@@ -364,7 +364,7 @@ export default function PersonnelDirectoryPage() {
             <PersonnelCard key={p.id} personnel={p} />
           ))}
           {filteredList.length === 0 && (
-            <div className="col-span-full bg-white rounded-2xl border border-gray-200 p-8 text-center text-gray-400 text-xs">
+            <div className="col-span-full bg-white rounded-3xl border border-gray-200 p-10 text-center text-gray-500 text-sm">
               ไม่พบข้อมูลกำลังพลตามคำค้นหา
             </div>
           )}

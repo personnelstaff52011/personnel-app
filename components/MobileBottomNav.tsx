@@ -61,8 +61,8 @@ export default function MobileBottomNav() {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-t border-gray-200/90 shadow-[0_-2px_12px_rgba(0,0,0,0.06)] safe-bottom">
-      <div className="flex items-center justify-around h-14 px-2 max-w-md mx-auto">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-gray-200/90 shadow-[0_-3px_16px_rgba(0,0,0,0.08)] safe-bottom">
+      <div className="flex items-center justify-around h-16 px-1.5 max-w-lg mx-auto">
         {currentNavItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
@@ -72,17 +72,17 @@ export default function MobileBottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative -top-3 flex flex-col items-center group"
+                className="relative -top-3.5 flex flex-col items-center group px-1"
               >
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95 ${
+                <div className={`w-13 h-13 rounded-full flex items-center justify-center shadow-xl transition-transform active:scale-90 ${
                   active 
                     ? 'bg-amber-500 text-slate-950 ring-4 ring-amber-100' 
                     : 'bg-slate-900 text-amber-400 ring-4 ring-white'
                 }`}>
-                  <Icon className="w-6 h-6" />
+                  <Icon className="w-6.5 h-6.5 stroke-[2.2]" />
                 </div>
-                <span className={`text-[10px] font-bold mt-0.5 tracking-tight ${
-                  active ? 'text-amber-600' : 'text-slate-700'
+                <span className={`text-xs font-bold mt-1 tracking-tight ${
+                  active ? 'text-amber-600' : 'text-slate-800'
                 }`}>
                   {item.label}
                 </span>
@@ -94,17 +94,17 @@ export default function MobileBottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex-1 flex flex-col items-center justify-center py-1 transition-colors active:scale-95 ${
-                active ? 'text-slate-900 font-extrabold' : 'text-gray-400 hover:text-gray-600'
+              className={`flex-1 flex flex-col items-center justify-center py-1.5 transition-colors active:scale-95 ${
+                active ? 'text-slate-900 font-extrabold' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               <div className="relative">
-                <Icon className={`w-5 h-5 ${active ? 'text-blue-600 stroke-[2.5]' : 'stroke-[1.75]'}`} />
+                <Icon className={`w-6 h-6 ${active ? 'text-blue-600 stroke-[2.5]' : 'stroke-[1.8]'}`} />
                 {active && (
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-blue-600 rounded-full" />
                 )}
               </div>
-              <span className={`text-[11px] mt-1 leading-none ${active ? 'font-bold text-slate-900' : 'font-medium'}`}>
+              <span className={`text-xs mt-1 leading-none ${active ? 'font-bold text-slate-950' : 'font-medium text-gray-500'}`}>
                 {item.label}
               </span>
             </Link>

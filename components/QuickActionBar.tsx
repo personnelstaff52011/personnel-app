@@ -20,25 +20,25 @@ export default function QuickActionBar({
   const cleanPhone = phoneNumber ? phoneNumber.replace(/[^0-9]/g, '') : '';
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-gray-200/90 px-3.5 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] safe-bottom md:static md:bg-transparent md:border-0 md:p-0 md:shadow-none md:backdrop-blur-none">
-      <div className="max-w-md md:max-w-4xl mx-auto flex items-center justify-between gap-2">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-gray-200/90 px-4 py-3.5 shadow-[0_-4px_24px_rgba(0,0,0,0.1)] safe-bottom md:static md:bg-transparent md:border-0 md:p-0 md:shadow-none md:backdrop-blur-none">
+      <div className="max-w-md md:max-w-4xl mx-auto flex items-center justify-between gap-2.5">
         {/* Call Button (Available for all roles) */}
         {cleanPhone ? (
           <a
             href={`tel:${cleanPhone}`}
-            className="flex-1 inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-xs sm:text-sm shadow-sm transition-transform active:scale-95 touch-manipulation"
+            className="flex-1 inline-flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm sm:text-base shadow-sm transition-transform active:scale-95 touch-manipulation"
             title={`โทรออก ${phoneNumber}`}
           >
-            <Phone className="w-4 h-4 fill-white flex-shrink-0" />
-            <span>โทรออก (Call)</span>
+            <Phone className="w-5 h-5 fill-white flex-shrink-0" />
+            <span>โทรออก</span>
           </a>
         ) : (
           <button
             disabled
-            className="flex-1 inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-gray-200 text-gray-400 font-bold text-xs sm:text-sm cursor-not-allowed"
+            className="flex-1 inline-flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl bg-gray-200 text-gray-400 font-bold text-sm sm:text-base cursor-not-allowed"
           >
-            <Phone className="w-4 h-4 flex-shrink-0" />
-            <span>โทรออก (Call)</span>
+            <Phone className="w-5 h-5 flex-shrink-0" />
+            <span>โทรออก</span>
           </button>
         )}
 
@@ -46,19 +46,19 @@ export default function QuickActionBar({
         {cleanPhone ? (
           <a
             href={`sms:${cleanPhone}`}
-            className="flex-1 inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-xs sm:text-sm shadow-sm transition-transform active:scale-95 touch-manipulation"
+            className="flex-1 inline-flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm sm:text-base shadow-sm transition-transform active:scale-95 touch-manipulation"
             title={`ส่งข้อความ SMS ${phoneNumber}`}
           >
-            <MessageSquare className="w-4 h-4 flex-shrink-0" />
-            <span>ข้อความ (SMS)</span>
+            <MessageSquare className="w-5 h-5 flex-shrink-0" />
+            <span>ข้อความ</span>
           </a>
         ) : (
           <button
             disabled
-            className="flex-1 inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-gray-200 text-gray-400 font-bold text-xs sm:text-sm cursor-not-allowed"
+            className="flex-1 inline-flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl bg-gray-200 text-gray-400 font-bold text-sm sm:text-base cursor-not-allowed"
           >
-            <MessageSquare className="w-4 h-4 flex-shrink-0" />
-            <span>ข้อความ (SMS)</span>
+            <MessageSquare className="w-5 h-5 flex-shrink-0" />
+            <span>ข้อความ</span>
           </button>
         )}
 
@@ -67,20 +67,20 @@ export default function QuickActionBar({
           <>
             <Link
               href={`/personnel/${personnelId}/edit`}
-              className="inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-sm transition-transform active:scale-95 touch-manipulation flex-shrink-0"
+              className="inline-flex items-center justify-center space-x-1.5 px-4 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-sm transition-transform active:scale-95 touch-manipulation flex-shrink-0"
               title="แก้ไขข้อมูลกำลังพล (Admin)"
             >
-              <Edit3 className="w-3.5 h-3.5 flex-shrink-0" />
+              <Edit3 className="w-4 h-4 flex-shrink-0" />
               <span>แก้ไข</span>
             </Link>
 
             <button
               type="button"
               onClick={onDeleteClick}
-              className="inline-flex items-center justify-center p-2.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs sm:text-sm transition-transform active:scale-95 touch-manipulation flex-shrink-0"
+              className="inline-flex items-center justify-center p-3 rounded-2xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-sm transition-transform active:scale-95 touch-manipulation flex-shrink-0"
               title="ลบข้อมูลกำลังพล (Admin)"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-4.5 h-4.5" />
             </button>
           </>
         )}

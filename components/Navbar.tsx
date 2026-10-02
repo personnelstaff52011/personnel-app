@@ -59,19 +59,19 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Brand Logo & Title */}
           <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-slate-900 flex items-center justify-center text-amber-400 shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-900 flex items-center justify-center text-amber-400 shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
               <Compass className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center space-x-1.5">
-                <span className="text-sm sm:text-base font-bold text-gray-900 leading-tight tracking-tight">
+                <span className="text-base sm:text-lg font-extrabold text-gray-900 leading-tight tracking-tight">
                   ข้อมูลกำลังพล
                 </span>
-                <span className="text-[10px] sm:text-xs font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
+                <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900">
                   พล.ช.
                 </span>
               </div>
-              <span className="text-[10px] sm:text-xs text-gray-500 font-medium tracking-tight">
+              <span className="text-xs text-gray-500 font-medium tracking-tight">
                 กองพลทหารช่าง (Engineer Division)
               </span>
             </div>
@@ -86,13 +86,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors ${
+                  className={`flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
                     active
                       ? 'bg-slate-900 text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? 'text-amber-400' : 'text-gray-500'}`} />
+                  <Icon className={`w-4.5 h-4.5 ${active ? 'text-amber-400' : 'text-gray-500'}`} />
                   <span>{link.label}</span>
                 </Link>
               );
@@ -104,18 +104,18 @@ export default function Navbar() {
             {/* Supabase Status Pill */}
             {supabaseConnected ? (
               <div 
-                className="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"
+                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"
                 title="เชื่อมต่อ Supabase Live Database สำเร็จ"
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Supabase Online</span>
               </div>
             ) : (
               <div 
-                className="hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-300"
+                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300"
                 title="โหมด Local Demo Sync"
               >
-                <ShieldAlert className="w-3.5 h-3.5 text-slate-500" />
+                <ShieldAlert className="w-4 h-4 text-slate-500" />
                 <span>Demo Sync</span>
               </div>
             )}
@@ -124,24 +124,24 @@ export default function Navbar() {
             {user ? (
               <Link
                 href="/settings/profile"
-                className="flex items-center space-x-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-xs font-bold text-gray-700 transition-colors shadow-2xs"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-xs sm:text-sm font-bold text-gray-800 transition-colors shadow-2xs"
                 title="แตะเพื่อจัดการตั้งค่าผู้ใช้"
               >
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white ${
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold text-white ${
                   isAdmin ? 'bg-slate-900 text-amber-400' : 'bg-blue-600'
                 }`}>
                   {isAdmin ? 'A' : 'U'}
                 </div>
-                <span className="truncate max-w-[80px] sm:max-w-[120px]">
+                <span className="truncate max-w-[85px] sm:max-w-[130px]">
                   {isAdmin ? 'Admin' : 'User'}
                 </span>
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="flex items-center space-x-1 px-3 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors"
+                className="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-slate-800 transition-colors"
               >
-                <LogIn className="w-3.5 h-3.5" />
+                <LogIn className="w-4 h-4" />
                 <span>เข้าสู่ระบบ</span>
               </Link>
             )}

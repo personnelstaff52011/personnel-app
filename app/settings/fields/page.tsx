@@ -242,24 +242,24 @@ function FieldSettingsComponent() {
               if (catFields.length === 0) return null;
 
               return (
-                <div key={cat} className="bg-white rounded-3xl border border-gray-200 p-4 sm:p-6 shadow-xs space-y-3">
-                  <div className="border-b border-gray-100 pb-2.5 flex items-center justify-between">
-                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 flex items-center space-x-2">
-                      <LayoutGrid className="w-4 h-4 text-slate-700" />
+                <div key={cat} className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-3.5">
+                  <div className="border-b border-gray-100 pb-3 flex items-center justify-between">
+                    <h3 className="text-sm sm:text-base font-bold text-gray-900 flex items-center space-x-2">
+                      <LayoutGrid className="w-5 h-5 text-slate-700" />
                       <span>หมวดหมู่: {cat}</span>
                     </h3>
-                    <span className="text-[11px] text-gray-400 font-medium">
+                    <span className="text-xs text-gray-500 font-semibold">
                       เปิดอยู่ {catFields.filter((f) => f.visible).length} / {catFields.length} ฟิลด์
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {catFields.map((field) => {
                       return (
                         <div
                           key={field.key}
                           onClick={() => handleToggleField(field.key)}
-                          className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 active:scale-[0.99] ${
+                          className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 active:scale-[0.99] ${
                             field.visible
                               ? 'bg-slate-50/80 border-slate-300 hover:border-slate-400 shadow-2xs'
                               : 'bg-gray-50/40 border-gray-200 opacity-60 hover:opacity-80'
@@ -267,17 +267,17 @@ function FieldSettingsComponent() {
                         >
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center space-x-2">
-                              <span className={`text-xs sm:text-sm font-bold ${
+                              <span className={`text-sm sm:text-base font-bold ${
                                 field.visible ? 'text-gray-900' : 'text-gray-500 line-through'
                               }`}>
                                 {field.label}
                               </span>
-                              <span className="text-[10px] font-mono text-gray-400">
+                              <span className="text-xs font-mono text-gray-400">
                                 ({field.key})
                               </span>
                             </div>
                             {field.description && (
-                              <p className="text-[11px] text-gray-400 mt-0.5 truncate">
+                              <p className="text-xs sm:text-sm text-gray-500 mt-0.5 truncate">
                                 {field.description}
                               </p>
                             )}
@@ -285,18 +285,18 @@ function FieldSettingsComponent() {
 
                           {/* Switch Toggle */}
                           <div className="flex items-center space-x-2 flex-shrink-0">
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                               field.visible
                                 ? 'bg-emerald-100 text-emerald-800'
-                                : 'bg-gray-200 text-gray-500'
+                                : 'bg-gray-200 text-gray-600'
                             }`}>
                               {field.visible ? 'เปิด' : 'ปิด'}
                             </span>
-                            <div className={`w-11 h-6 rounded-full transition-colors relative flex items-center p-0.5 ${
+                            <div className={`w-12 h-6.5 rounded-full transition-colors relative flex items-center p-0.5 ${
                               field.visible ? 'bg-emerald-600' : 'bg-gray-300'
                             }`}>
-                              <div className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
-                                field.visible ? 'translate-x-5' : 'translate-x-0'
+                              <div className={`w-5.5 h-5.5 rounded-full bg-white shadow-sm transition-transform ${
+                                field.visible ? 'translate-x-5.5' : 'translate-x-0'
                               }`} />
                             </div>
                           </div>
