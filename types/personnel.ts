@@ -2,6 +2,9 @@ export interface Personnel {
   id: string;
   service_code?: string | null;
   seq_no: number;
+  rank_th?: string | null;
+  first_name_th?: string | null;
+  last_name_th?: string | null;
   full_name_th: string;
   nickname?: string | null;
   rank_en?: string | null;
@@ -23,6 +26,39 @@ export interface Personnel {
   created_at?: string;
   updated_at?: string;
 }
+
+export const splitFullNameTh = (fullName: string = ''): { rank_th: string; first_name_th: string; last_name_th: string } => {
+  if (!fullName) return { rank_th: '', first_name_th: '', last_name_th: '' };
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 0 || (parts.length === 1 && parts[0] === '')) {
+    return { rank_th: '', first_name_th: '', last_name_th: '' };
+  }
+  if (parts.length === 1) {
+    return { rank_th: '', first_name_th: parts[0], last_name_th: '' };
+  }
+  if (parts.length === 2) {
+    if (parts[0].includes('.') || parts[0].length <= 5) {
+      return { rank_th: parts[0], first_name_th: parts[1], last_name_th: '' };
+    }
+    return { rank_th: '', first_name_th: parts[0], last_name_th: parts[1] };
+  }
+  return {
+    rank_th: parts[0],
+    first_name_th: parts[1],
+    last_name_th: parts.slice(2).join(' '),
+  };
+};
+
+export const formatFullNameTh = (
+  rank_th?: string | null,
+  first_name_th?: string | null,
+  last_name_th?: string | null
+): string => {
+  return [rank_th, first_name_th, last_name_th]
+    .filter((s): s is string => typeof s === 'string' && s.trim().length > 0)
+    .map((s) => s.trim())
+    .join(' ');
+};
 
 export interface FieldDefinition {
   id: string;

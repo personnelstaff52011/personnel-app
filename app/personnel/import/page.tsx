@@ -17,7 +17,7 @@ import {
 import * as XLSX from 'xlsx';
 import AdminOnlyGuard from '@/components/AdminOnlyGuard';
 import { personnelService } from '@/lib/personnelService';
-import { Personnel } from '@/types/personnel';
+import { Personnel, splitFullNameTh, formatFullNameTh } from '@/types/personnel';
 
 export default function ExcelImportPage() {
   return (
@@ -92,11 +92,23 @@ function ExcelImportComponent() {
       const mapped: Array<Omit<Personnel, 'id' | 'created_at' | 'updated_at'>> = rawRows.map((row, idx) => {
         const seq_no = Number(row['ลำดับ (No)'] || row['ลำดับ'] || row['seq_no'] || idx + 1);
         const service_code = String(row['รหัสกำลังพล (Service Code)'] || row['รหัสกำลังพล'] || row['service_code'] || `PKF-THAI-${String(seq_no).padStart(5, '0')}`).trim();
-        const full_name_th = String(row['ยศ ชื่อ-นามสกุล (ไทย)'] || row['ยศ ชื่อ-นามสกุล'] || row['full_name_th'] || '').trim();
+        const rawRankTh = String(row['ยศ (ไทย)'] || row['ยศ'] || row['rank_th'] || '').trim();
+        const rawFirstNameTh = String(row['ชื่อ (ไทย)'] || row['ชื่อ'] || row['first_name_th'] || '').trim();
+        const rawLastNameTh = String(row['สกุล (ไทย)'] || row['นามสกุล'] || row['last_name_th'] || '').trim();
+        const rawFullNameTh = String(row['ยศ ชื่อ-นามสกุล (ไทย)'] || row['ยศ ชื่อ-นามสกุล'] || row['full_name_th'] || '').trim();
+
+        const split = splitFullNameTh(rawFullNameTh);
+        const rank_th = rawRankTh || split.rank_th || null;
+        const first_name_th = rawFirstNameTh || split.first_name_th || null;
+        const last_name_th = rawLastNameTh || split.last_name_th || null;
+        const full_name_th = rawFullNameTh || formatFullNameTh(rank_th, first_name_th, last_name_th) || '';
 
         return {
           seq_no,
           service_code,
+          rank_th,
+          first_name_th,
+          last_name_th,
           full_name_th,
           nickname: String(row['ชื่อเล่น'] || row['nickname'] || '').trim() || null,
           rank_en: String(row['RANK (EN)'] || row['rank_en'] || '').trim() || null,

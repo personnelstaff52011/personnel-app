@@ -15,7 +15,7 @@ import {
 import AvatarUploader from '@/components/AvatarUploader';
 import AdminOnlyGuard from '@/components/AdminOnlyGuard';
 import { personnelService } from '@/lib/personnelService';
-import { FieldDefinition } from '@/types/personnel';
+import { FieldDefinition, splitFullNameTh, formatFullNameTh } from '@/types/personnel';
 
 export default function EditPersonnelPage() {
   return (
@@ -37,6 +37,9 @@ function EditPersonnelForm() {
   // Form states
   const [formData, setFormData] = useState({
     seq_no: 1,
+    rank_th: '',
+    first_name_th: '',
+    last_name_th: '',
     full_name_th: '',
     nickname: '',
     rank_en: '',
@@ -68,9 +71,17 @@ function EditPersonnelForm() {
         setFieldDefs(fields);
 
         if (personnel) {
+          const split = splitFullNameTh(personnel.full_name_th || '');
+          const rank_th = personnel.rank_th || split.rank_th || '';
+          const first_name_th = personnel.first_name_th || split.first_name_th || '';
+          const last_name_th = personnel.last_name_th || split.last_name_th || '';
+
           setFormData({
             seq_no: personnel.seq_no || 1,
-            full_name_th: personnel.full_name_th || '',
+            rank_th,
+            first_name_th,
+            last_name_th,
+            full_name_th: personnel.full_name_th || formatFullNameTh(rank_th, first_name_th, last_name_th),
             nickname: personnel.nickname || '',
             rank_en: personnel.rank_en || '',
             first_name_en: personnel.first_name_en || '',
@@ -116,15 +127,18 @@ function EditPersonnelForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.full_name_th) {
-      alert('กรุณากรอกชื่อ-สกุลภาษาไทย');
+    if (!formData.first_name_th.trim() || !formData.last_name_th.trim()) {
+      alert('กรุณากรอกชื่อและนามสกุลภาษาไทย');
       return;
     }
+
+    const full_name_th = formatFullNameTh(formData.rank_th, formData.first_name_th, formData.last_name_th);
 
     setLoading(true);
     try {
       await personnelService.update(id, {
         ...formData,
+        full_name_th,
         custom_fields: customFields,
       });
       router.push(`/personnel/${id}`);
@@ -245,20 +259,52 @@ function EditPersonnelForm() {
             <span>ยศ ชื่อ-นามสกุล และข้อมูลบุคคล</span>
           </div>
 
+          {/* 1. ยศ, ชื่อ, สกุล ภาษาไทย */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-            <div className="sm:col-span-2">
+            <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
-                ยศ ชื่อ-นามสกุล ภาษาไทย (full_name_th) *
+                ยศ (ไทย)
               </label>
               <input
                 type="text"
-                name="full_name_th"
-                value={formData.full_name_th}
+                name="rank_th"
+                value={formData.rank_th}
                 onChange={handleChange}
+                placeholder="เช่น พ.ท. หรือ ส.อ."
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                ชื่อ (ไทย) *
+              </label>
+              <input
+                type="text"
+                name="first_name_th"
+                value={formData.first_name_th}
+                onChange={handleChange}
+                placeholder="เช่น นฤเบศร์"
                 required
                 className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                สกุล (ไทย) *
+              </label>
+              <input
+                type="text"
+                name="last_name_th"
+                value={formData.last_name_th}
+                onChange={handleChange}
+                placeholder="เช่น บุญคุ้ม"
+                required
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
                 ชื่อเล่น (nickname)
@@ -268,6 +314,7 @@ function EditPersonnelForm() {
                 name="nickname"
                 value={formData.nickname}
                 onChange={handleChange}
+                placeholder="เช่น สอง"
                 className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>

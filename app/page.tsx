@@ -264,7 +264,7 @@ export default function DashboardPage() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <span className="text-sm sm:text-base font-bold text-gray-900 truncate block">
-                          {p.full_name_th} {p.nickname ? `(${p.nickname})` : ''}
+                          {(p.full_name_th || [p.rank_th, p.first_name_th, p.last_name_th].filter(Boolean).join(' '))} {p.nickname ? `(${p.nickname})` : ''}
                         </span>
                         <span className="text-xs text-gray-500 truncate block">
                           {p.department || 'ไม่ระบุสังกัด'}

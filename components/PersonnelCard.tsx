@@ -52,7 +52,7 @@ export default function PersonnelCard({ personnel }: PersonnelCardProps) {
 
           <div className="min-w-0 flex-1">
             <h4 className="text-base sm:text-lg font-extrabold text-gray-900 group-hover/link:text-blue-600 transition-colors truncate">
-              {personnel.full_name_th}
+              {personnel.full_name_th || [personnel.rank_th, personnel.first_name_th, personnel.last_name_th].filter(Boolean).join(' ')}
             </h4>
             {personnel.nickname && (
               <p className="text-xs sm:text-sm text-gray-600 font-medium mt-0.5">

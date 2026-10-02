@@ -1,5 +1,15 @@
 import { supabase, isSupabaseConfigured } from './supabaseClient';
-import { Personnel, FieldDefinition, DisplayFieldSetting, KPIStats, DepartmentStat, BloodGroupStat, RankStat } from '@/types/personnel';
+import {
+  Personnel,
+  FieldDefinition,
+  DisplayFieldSetting,
+  KPIStats,
+  DepartmentStat,
+  BloodGroupStat,
+  RankStat,
+  splitFullNameTh,
+  formatFullNameTh,
+} from '@/types/personnel';
 import { INITIAL_PERSONNEL, INITIAL_FIELD_DEFINITIONS } from './mockData';
 
 const LOCAL_STORAGE_PERSONNEL_KEY = 'engineer_division_personnel';
@@ -8,6 +18,9 @@ const LOCAL_STORAGE_DISPLAY_FIELDS_KEY = 'engineer_division_display_fields';
 
 export const DEFAULT_DISPLAY_FIELDS: DisplayFieldSetting[] = [
   // 1. ข้อมูลยศและชื่อ
+  { key: 'rank_th', label: 'ยศ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชั้นยศภาษาไทย เช่น พ.ท., พ.อ., ส.อ.' },
+  { key: 'first_name_th', label: 'ชื่อ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชื่อตัวภาษาไทย' },
+  { key: 'last_name_th', label: 'สกุล (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'นามสกุลภาษาไทย' },
   { key: 'rank_en', label: 'RANK (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชั้นยศภาษาอังกฤษ เช่น LTC, MAJ, CPT' },
   { key: 'first_name_en', label: 'NAME (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชื่อตัวภาษาอังกฤษ' },
   { key: 'last_name_en', label: 'LASTNAME (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'นามสกุลภาษาอังกฤษ' },
@@ -60,8 +73,18 @@ const getLocalPersonnel = (): Personnel[] => {
       const fallbackPhoto = initialPhotoMap.get(p.id) || '';
       const photo_url = (p.photo_url && p.photo_url.trim() !== '') ? p.photo_url : fallbackPhoto;
 
+      const split = splitFullNameTh(p.full_name_th || '');
+      const rank_th = p.rank_th || split.rank_th;
+      const first_name_th = p.first_name_th || split.first_name_th;
+      const last_name_th = p.last_name_th || split.last_name_th;
+      const full_name_th = p.full_name_th || formatFullNameTh(rank_th, first_name_th, last_name_th);
+
       return {
         ...p,
+        rank_th,
+        first_name_th,
+        last_name_th,
+        full_name_th,
         photo_url,
         field_position: undefined,
         passport_no: undefined,
@@ -152,8 +175,19 @@ export const personnelService = {
   async create(personnel: Omit<Personnel, 'id' | 'created_at' | 'updated_at'>): Promise<Personnel> {
     const newId = generateUUID();
     const now = new Date().toISOString();
+
+    const split = splitFullNameTh(personnel.full_name_th || '');
+    const rank_th = (personnel.rank_th !== undefined && personnel.rank_th !== null && personnel.rank_th !== '') ? personnel.rank_th : split.rank_th;
+    const first_name_th = (personnel.first_name_th !== undefined && personnel.first_name_th !== null && personnel.first_name_th !== '') ? personnel.first_name_th : split.first_name_th;
+    const last_name_th = (personnel.last_name_th !== undefined && personnel.last_name_th !== null && personnel.last_name_th !== '') ? personnel.last_name_th : split.last_name_th;
+    const full_name_th = formatFullNameTh(rank_th, first_name_th, last_name_th) || personnel.full_name_th || '';
+
     const newPersonnel: Personnel = {
       ...personnel,
+      rank_th,
+      first_name_th,
+      last_name_th,
+      full_name_th,
       service_code: personnel.service_code || `PKF-THAI-${String(personnel.seq_no || 1).padStart(5, '0')}`,
       id: newId,
       created_at: now,
@@ -185,7 +219,33 @@ export const personnelService = {
   // 4. แก้ไขข้อมูลกำลังพล
   async update(id: string, personnel: Partial<Personnel>): Promise<Personnel> {
     const now = new Date().toISOString();
-    const updatedData = { ...personnel, updated_at: now };
+    const currentList = getLocalPersonnel();
+    const existing = currentList.find((p) => p.id === id);
+
+    let rank_th = personnel.rank_th !== undefined ? personnel.rank_th : existing?.rank_th;
+    let first_name_th = personnel.first_name_th !== undefined ? personnel.first_name_th : existing?.first_name_th;
+    let last_name_th = personnel.last_name_th !== undefined ? personnel.last_name_th : existing?.last_name_th;
+    let full_name_th = personnel.full_name_th !== undefined ? personnel.full_name_th : existing?.full_name_th;
+
+    // If individual Thai name parts were supplied, recompute full_name_th
+    if (personnel.rank_th !== undefined || personnel.first_name_th !== undefined || personnel.last_name_th !== undefined) {
+      full_name_th = formatFullNameTh(rank_th, first_name_th, last_name_th);
+    } else if (personnel.full_name_th !== undefined) {
+      // If only full_name_th was passed, split into 3 parts
+      const split = splitFullNameTh(personnel.full_name_th);
+      rank_th = split.rank_th;
+      first_name_th = split.first_name_th;
+      last_name_th = split.last_name_th;
+    }
+
+    const updatedData: Partial<Personnel> = {
+      ...personnel,
+      ...(rank_th !== undefined ? { rank_th } : {}),
+      ...(first_name_th !== undefined ? { first_name_th } : {}),
+      ...(last_name_th !== undefined ? { last_name_th } : {}),
+      ...(full_name_th !== undefined ? { full_name_th } : {}),
+      updated_at: now,
+    };
 
     if (isSupabaseConfigured()) {
       try {
@@ -207,7 +267,7 @@ export const personnelService = {
     const list = getLocalPersonnel();
     const index = list.findIndex((p) => p.id === id);
     if (index !== -1) {
-      list[index] = { ...list[index], ...updatedData };
+      list[index] = { ...list[index], ...updatedData } as Personnel;
       saveLocalPersonnel(list);
       return list[index];
     }
@@ -366,6 +426,7 @@ export const personnelService = {
       // ตรวจสอบชั้นยศ
       const isCommissioned = commissionedRanks.some(
         (r) =>
+          (p.rank_th && p.rank_th.startsWith(r)) ||
           (p.full_name_th && p.full_name_th.startsWith(r)) ||
           (p.rank_en && p.rank_en.toUpperCase() === r.toUpperCase())
       );

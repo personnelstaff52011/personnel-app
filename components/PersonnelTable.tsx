@@ -69,7 +69,7 @@ export default function PersonnelTable({
                 <td className="px-4 py-3">
                   <div className="text-sm sm:text-base font-bold text-gray-900 flex items-center space-x-1.5">
                     <Link href={`/personnel/${p.id}`} className="hover:text-blue-600 transition-colors">
-                      {p.full_name_th}
+                      {p.full_name_th || [p.rank_th, p.first_name_th, p.last_name_th].filter(Boolean).join(' ')}
                     </Link>
                     {p.nickname && (
                       <span className="text-xs sm:text-sm text-gray-500 font-medium">

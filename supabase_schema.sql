@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS public.personnel (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     service_code VARCHAR(50), -- รหัสกำลังพล (เป็นตัวเลือกเสริม)
     seq_no INTEGER NOT NULL,
-    full_name_th VARCHAR(255) NOT NULL,
+    rank_th VARCHAR(50), -- ยศ (ไทย) เช่น พ.ท., พ.อ., ส.อ.
+    first_name_th VARCHAR(100), -- ชื่อ (ไทย)
+    last_name_th VARCHAR(100), -- สกุล (ไทย)
+    full_name_th VARCHAR(255) NOT NULL, -- ยศ ชื่อ-นามสกุล รวมกัน
     nickname VARCHAR(100),
     rank_en VARCHAR(50),
     first_name_en VARCHAR(100),

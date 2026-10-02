@@ -20,7 +20,7 @@ import PersonnelTable from '@/components/PersonnelTable';
 import PersonnelCard from '@/components/PersonnelCard';
 import DeleteConfirmModal from '@/components/DeleteConfirmModal';
 import { personnelService } from '@/lib/personnelService';
-import { Personnel } from '@/types/personnel';
+import { Personnel, splitFullNameTh, formatFullNameTh } from '@/types/personnel';
 import { useAuth } from '@/context/AuthContext';
 
 export default function PersonnelDirectoryPage() {
@@ -85,6 +85,9 @@ export default function PersonnelDirectoryPage() {
       const matchesSearch =
         !term ||
         (p.full_name_th && p.full_name_th.toLowerCase().includes(term)) ||
+        (p.rank_th && p.rank_th.toLowerCase().includes(term)) ||
+        (p.first_name_th && p.first_name_th.toLowerCase().includes(term)) ||
+        (p.last_name_th && p.last_name_th.toLowerCase().includes(term)) ||
         (p.nickname && p.nickname.toLowerCase().includes(term)) ||
         (p.first_name_en && p.first_name_en.toLowerCase().includes(term)) ||
         (p.last_name_en && p.last_name_en.toLowerCase().includes(term)) ||
@@ -121,24 +124,35 @@ export default function PersonnelDirectoryPage() {
       return;
     }
 
-    const exportData = filteredList.map((p) => ({
-      'ลำดับ (No)': p.seq_no,
-      'ยศ ชื่อ-นามสกุล (ไทย)': p.full_name_th,
-      'ชื่อเล่น': p.nickname || '',
-      'RANK (EN)': p.rank_en || '',
-      'NAME (EN)': p.first_name_en || '',
-      'LASTNAME (EN)': p.last_name_en || '',
-      'หมายเลขประจำตัวทหาร': p.military_id || '',
-      'หมายเลขประชาชน': p.citizen_id || '',
-      'ตำแหน่งปกติ': p.regular_position || '',
-      'ขั้นเงินเดือน': p.salary_step || '',
-      'กลุ่มเลือด': p.blood_group || '',
-      'เบอร์ติดต่อ': p.phone_number || '',
-      'ส่วนงาน/กองร้อย': p.department || '',
-      'ศาสนา': p.religion || '',
-      'วัน เดือน ปี เกิด': p.birth_date || '',
-      'ลิงก์รูปถ่าย': p.photo_url || '',
-    }));
+    const exportData = filteredList.map((p) => {
+      const split = splitFullNameTh(p.full_name_th);
+      const rank_th = p.rank_th || split.rank_th || '';
+      const first_name_th = p.first_name_th || split.first_name_th || '';
+      const last_name_th = p.last_name_th || split.last_name_th || '';
+      const full_name_th = p.full_name_th || formatFullNameTh(rank_th, first_name_th, last_name_th);
+
+      return {
+        'ลำดับ (No)': p.seq_no,
+        'ยศ (ไทย)': rank_th,
+        'ชื่อ (ไทย)': first_name_th,
+        'นามสกุล (ไทย)': last_name_th,
+        'ยศ ชื่อ-นามสกุล (ไทย)': full_name_th,
+        'ชื่อเล่น': p.nickname || '',
+        'RANK (EN)': p.rank_en || '',
+        'NAME (EN)': p.first_name_en || '',
+        'LASTNAME (EN)': p.last_name_en || '',
+        'หมายเลขประจำตัวทหาร': p.military_id || '',
+        'หมายเลขประชาชน': p.citizen_id || '',
+        'ตำแหน่งปกติ': p.regular_position || '',
+        'ขั้นเงินเดือน': p.salary_step || '',
+        'กลุ่มเลือด': p.blood_group || '',
+        'เบอร์ติดต่อ': p.phone_number || '',
+        'ส่วนงาน/กองร้อย': p.department || '',
+        'ศาสนา': p.religion || '',
+        'วัน เดือน ปี เกิด': p.birth_date || '',
+        'ลิงก์รูปถ่าย': p.photo_url || '',
+      };
+    });
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();

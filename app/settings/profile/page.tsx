@@ -19,13 +19,16 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { splitFullNameTh, formatFullNameTh } from '@/types/personnel';
 
 export default function UserProfileSettingsPage() {
   const router = useRouter();
   const { user, personnelData, isAdmin, updateSelfProfile, changePassword, logout } = useAuth();
 
-  // Profile editable form state (Only allowed fields: ยศ, ชื่อ, นามสกุล, ชื่อเล่น, หมายเลขโทรศัพท์)
-  const [fullNameTh, setFullNameTh] = useState('');
+  // Profile editable form state (Only allowed fields: ยศ, ชื่อ, สกุล, ชื่อเล่น, หมายเลขโทรศัพท์)
+  const [rankTh, setRankTh] = useState('');
+  const [firstNameTh, setFirstNameTh] = useState('');
+  const [lastNameTh, setLastNameTh] = useState('');
   const [nickname, setNickname] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [rankEn, setRankEn] = useState('');
@@ -46,14 +49,20 @@ export default function UserProfileSettingsPage() {
 
   useEffect(() => {
     if (personnelData) {
-      setFullNameTh(personnelData.full_name_th || '');
+      const split = splitFullNameTh(personnelData.full_name_th || '');
+      setRankTh(personnelData.rank_th || split.rank_th || '');
+      setFirstNameTh(personnelData.first_name_th || split.first_name_th || '');
+      setLastNameTh(personnelData.last_name_th || split.last_name_th || '');
       setNickname(personnelData.nickname || '');
       setPhoneNumber(personnelData.phone_number || '');
       setRankEn(personnelData.rank_en || '');
       setFirstNameEn(personnelData.first_name_en || '');
       setLastNameEn(personnelData.last_name_en || '');
     } else if (user) {
-      setFullNameTh(user.displayName || '');
+      const split = splitFullNameTh(user.displayName || '');
+      setRankTh(user.rank_th || split.rank_th || '');
+      setFirstNameTh(user.first_name_th || split.first_name_th || '');
+      setLastNameTh(user.last_name_th || split.last_name_th || '');
       setNickname(user.nickname || '');
       setPhoneNumber(user.phone_number || '');
       setRankEn(user.rank_en || '');
@@ -67,15 +76,19 @@ export default function UserProfileSettingsPage() {
     setProfileSuccessMsg('');
     setProfileErrorMsg('');
 
-    if (!fullNameTh.trim()) {
-      setProfileErrorMsg('กรุณากรอกยศและชื่อ-นามสกุล');
+    if (!firstNameTh.trim() || !lastNameTh.trim()) {
+      setProfileErrorMsg('กรุณากรอกชื่อและนามสกุล');
       return;
     }
 
     setIsSavingProfile(true);
     try {
+      const combinedFullName = formatFullNameTh(rankTh.trim(), firstNameTh.trim(), lastNameTh.trim());
       const ok = await updateSelfProfile({
-        full_name_th: fullNameTh.trim(),
+        rank_th: rankTh.trim(),
+        first_name_th: firstNameTh.trim(),
+        last_name_th: lastNameTh.trim(),
+        full_name_th: combinedFullName,
         nickname: nickname.trim(),
         phone_number: phoneNumber.trim(),
         rank_en: rankEn.trim(),
@@ -174,7 +187,7 @@ export default function UserProfileSettingsPage() {
 
           <div className="min-w-0 flex-1">
             <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 truncate">
-              {fullNameTh || user?.displayName || 'กำลังพล'}
+              {formatFullNameTh(rankTh, firstNameTh, lastNameTh) || user?.displayName || 'กำลังพล'}
             </h2>
             <div className="flex items-center space-x-2 mt-1.5">
               <span className={`inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold ${
@@ -201,7 +214,7 @@ export default function UserProfileSettingsPage() {
             <span>แก้ไขข้อมูลส่วนตัวของตนเอง</span>
           </h3>
           <p className="text-xs text-gray-500 mt-0.5">
-            อนุญาตให้แก้ไขได้เฉพาะ ยศ ชื่อ-นามสกุล ชื่อเล่น และเบอร์โทรศัพท์
+            อนุญาตให้แก้ไขได้เฉพาะ ยศ ชื่อ สกุล ชื่อเล่น และเบอร์โทรศัพท์
           </p>
         </div>
 
@@ -220,19 +233,46 @@ export default function UserProfileSettingsPage() {
         )}
 
         <form onSubmit={handleProfileSubmit} className="space-y-4 text-sm">
-          {/* 1. ยศ ชื่อ-นามสกุล ภาษาไทย */}
-          <div>
-            <label className="block text-gray-800 font-bold mb-1.5">
-              ยศ ชื่อ-นามสกุล ภาษาไทย (full_name_th) *
-            </label>
-            <input
-              type="text"
-              value={fullNameTh}
-              onChange={(e) => setFullNameTh(e.target.value)}
-              placeholder="เช่น พ.ท. นฤเบศร์ บุญคุ้ม"
-              required
-              className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-            />
+          {/* 1. ยศ, ชื่อ, สกุล ภาษาไทย (3 ฟิลด์แยกกัน) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div>
+              <label className="block text-gray-800 font-bold mb-1.5">
+                ยศ (ไทย)
+              </label>
+              <input
+                type="text"
+                value={rankTh}
+                onChange={(e) => setRankTh(e.target.value)}
+                placeholder="เช่น พ.ท. หรือ ส.อ."
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-800 font-bold mb-1.5">
+                ชื่อ (ไทย) *
+              </label>
+              <input
+                type="text"
+                value={firstNameTh}
+                onChange={(e) => setFirstNameTh(e.target.value)}
+                placeholder="เช่น นฤเบศร์"
+                required
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-800 font-bold mb-1.5">
+                สกุล (ไทย) *
+              </label>
+              <input
+                type="text"
+                value={lastNameTh}
+                onChange={(e) => setLastNameTh(e.target.value)}
+                placeholder="เช่น บุญคุ้ม"
+                required
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">

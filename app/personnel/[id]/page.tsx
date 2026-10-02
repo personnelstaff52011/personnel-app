@@ -17,7 +17,7 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 import { personnelService } from '@/lib/personnelService';
-import { Personnel, FieldDefinition, DisplayFieldSetting } from '@/types/personnel';
+import { Personnel, FieldDefinition, DisplayFieldSetting, splitFullNameTh, formatFullNameTh } from '@/types/personnel';
 import { useAuth } from '@/context/AuthContext';
 import QuickActionBar from '@/components/QuickActionBar';
 import DeleteConfirmModal from '@/components/DeleteConfirmModal';
@@ -244,6 +244,21 @@ export default function PersonnelDetailPage() {
 
         {/* 3. Detailed Grid Layout: Only render visible field cards */}
         <div className="space-y-3 sm:space-y-4">
+          {/* แถวยศและชื่อภาษาไทย */}
+          {(isFieldVisible('rank_th') || isFieldVisible('first_name_th') || isFieldVisible('last_name_th')) && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+              {isFieldVisible('rank_th') && (
+                <GridItem label="ยศ (ไทย)" value={personnel.rank_th || splitFullNameTh(personnel.full_name_th).rank_th} />
+              )}
+              {isFieldVisible('first_name_th') && (
+                <GridItem label="ชื่อ (ไทย)" value={personnel.first_name_th || splitFullNameTh(personnel.full_name_th).first_name_th} />
+              )}
+              {isFieldVisible('last_name_th') && (
+                <GridItem label="สกุล (ไทย)" value={personnel.last_name_th || splitFullNameTh(personnel.full_name_th).last_name_th} />
+              )}
+            </div>
+          )}
+
           {/* แถวที่ 1: RANK (EN), NAME (EN), LASTNAME (EN), หมายเลขประจำตัว */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
             {isFieldVisible('rank_en') && <GridItem label="RANK (EN)" value={personnel.rank_en} />}

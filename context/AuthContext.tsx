@@ -13,6 +13,9 @@ export interface AuthUser {
   displayName: string;
   role: UserRole;
   department?: string;
+  rank_th?: string;
+  first_name_th?: string;
+  last_name_th?: string;
   rank_en?: string;
   first_name_en?: string;
   last_name_en?: string;
@@ -101,6 +104,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               displayName: defaultPersonnel.full_name_th,
               role: 'user',
               department: defaultPersonnel.department || '',
+              rank_th: defaultPersonnel.rank_th || '',
+              first_name_th: defaultPersonnel.first_name_th || '',
+              last_name_th: defaultPersonnel.last_name_th || '',
               rank_en: defaultPersonnel.rank_en || '',
               first_name_en: defaultPersonnel.first_name_en || '',
               last_name_en: defaultPersonnel.last_name_en || '',
@@ -176,6 +182,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             displayName: matched.full_name_th,
             role: 'user',
             department: matched.department || '',
+            rank_th: matched.rank_th || '',
+            first_name_th: matched.first_name_th || '',
+            last_name_th: matched.last_name_th || '',
             rank_en: matched.rank_en || '',
             first_name_en: matched.first_name_en || '',
             last_name_en: matched.last_name_en || '',
@@ -207,6 +216,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             displayName: matched.full_name_th,
             role: 'user',
             department: matched.department || '',
+            rank_th: matched.rank_th || '',
+            first_name_th: matched.first_name_th || '',
+            last_name_th: matched.last_name_th || '',
             rank_en: matched.rank_en || '',
             first_name_en: matched.first_name_en || '',
             last_name_en: matched.last_name_en || '',
@@ -258,12 +270,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // 3. User can edit ONLY: ยศ, ชื่อ, นามสกุล, ชื่อเล่น, หมายเลขโทรศัพท์
+  // 3. User can edit: ยศ, ชื่อ, นามสกุล, ชื่อเล่น, หมายเลขโทรศัพท์
   const updateSelfProfile = async (fields: Partial<Personnel>): Promise<boolean> => {
     if (!user || !user.id || user.id === 'admin-root') return false;
 
     // Filter strictly to allowed fields only
     const safeData: Partial<Personnel> = {};
+    if (fields.rank_th !== undefined) safeData.rank_th = fields.rank_th;
+    if (fields.first_name_th !== undefined) safeData.first_name_th = fields.first_name_th;
+    if (fields.last_name_th !== undefined) safeData.last_name_th = fields.last_name_th;
     if (fields.full_name_th !== undefined) safeData.full_name_th = fields.full_name_th;
     if (fields.nickname !== undefined) safeData.nickname = fields.nickname;
     if (fields.phone_number !== undefined) safeData.phone_number = fields.phone_number;
@@ -278,6 +293,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const updatedUser: AuthUser = {
         ...user,
         displayName: updated.full_name_th,
+        rank_th: updated.rank_th || '',
+        first_name_th: updated.first_name_th || '',
+        last_name_th: updated.last_name_th || '',
         nickname: updated.nickname || '',
         phone_number: updated.phone_number || '',
         rank_en: updated.rank_en || '',
@@ -305,6 +323,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             ? {
                 ...prev,
                 displayName: p.full_name_th,
+                rank_th: p.rank_th || '',
+                first_name_th: p.first_name_th || '',
+                last_name_th: p.last_name_th || '',
                 nickname: p.nickname || '',
                 phone_number: p.phone_number || '',
                 rank_en: p.rank_en || '',

@@ -14,6 +14,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-002',
     seq_no: 2,
+    rank_th: 'พ.ท.',
+    first_name_th: 'นฤเบศร์',
+    last_name_th: 'บุญคุ้ม',
     full_name_th: 'พ.ท. นฤเบศร์ บุญคุ้ม',
     nickname: 'สอง',
     rank_en: 'LTC',
@@ -38,6 +41,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-001',
     seq_no: 1,
+    rank_th: 'พ.อ.',
+    first_name_th: 'เกียรติศักดิ์',
+    last_name_th: 'พรหมมินทร์',
     full_name_th: 'พ.อ. เกียรติศักดิ์ พรหมมินทร์',
     nickname: 'เอก',
     rank_en: 'COL',
@@ -62,6 +68,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-003',
     seq_no: 3,
+    rank_th: 'ร.อ.',
+    first_name_th: 'ธีรภัทร',
+    last_name_th: 'วงศ์สุวรรณ',
     full_name_th: 'ร.อ. ธีรภัทร วงศ์สุวรรณ',
     nickname: 'ภัทร',
     rank_en: 'CPT',
@@ -84,6 +93,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-004',
     seq_no: 4,
+    rank_th: 'ร.ท.',
+    first_name_th: 'อัครพล',
+    last_name_th: 'สุขสมบูรณ์',
     full_name_th: 'ร.ท. อัครพล สุขสมบูรณ์',
     nickname: 'บอย',
     rank_en: '1LT',
@@ -106,6 +118,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-005',
     seq_no: 5,
+    rank_th: 'จ.ส.อ.',
+    first_name_th: 'สมเกียรติ',
+    last_name_th: 'ยิ่งเจริญ',
     full_name_th: 'จ.ส.อ. สมเกียรติ ยิ่งเจริญ',
     nickname: 'เกียรติ',
     rank_en: 'SGM',
@@ -128,6 +143,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-006',
     seq_no: 6,
+    rank_th: 'ส.อ.',
+    first_name_th: 'ปริญญา',
+    last_name_th: 'บุญส่ง',
     full_name_th: 'ส.อ. ปริญญา บุญส่ง',
     nickname: 'ปริญ',
     rank_en: 'SGT',
@@ -150,6 +168,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-007',
     seq_no: 7,
+    rank_th: 'ส.ท.',
+    first_name_th: 'วรพงษ์',
+    last_name_th: 'แก้วมณี',
     full_name_th: 'ส.ท. วรพงษ์ แก้วมณี',
     nickname: 'พงษ์',
     rank_en: 'CPL',
@@ -172,6 +193,9 @@ export const INITIAL_PERSONNEL: Personnel[] = [
   {
     id: 'p-008',
     seq_no: 8,
+    rank_th: 'พ.ต.',
+    first_name_th: 'กฤษดา',
+    last_name_th: 'ศรีสวัสดิ์',
     full_name_th: 'พ.ต. กฤษดา ศรีสวัสดิ์',
     nickname: 'กฤษ',
     rank_en: 'MAJ',

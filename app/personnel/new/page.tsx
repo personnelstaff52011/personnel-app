@@ -15,7 +15,7 @@ import {
 import AvatarUploader from '@/components/AvatarUploader';
 import AdminOnlyGuard from '@/components/AdminOnlyGuard';
 import { personnelService } from '@/lib/personnelService';
-import { FieldDefinition } from '@/types/personnel';
+import { FieldDefinition, formatFullNameTh } from '@/types/personnel';
 
 export default function NewPersonnelPage() {
   return (
@@ -33,6 +33,9 @@ function NewPersonnelForm() {
   // Form states
   const [formData, setFormData] = useState({
     seq_no: 1,
+    rank_th: '',
+    first_name_th: '',
+    last_name_th: '',
     full_name_th: '',
     nickname: '',
     rank_en: '',
@@ -100,15 +103,18 @@ function NewPersonnelForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.full_name_th) {
-      alert('กรุณากรอกชื่อ-สกุลภาษาไทย');
+    if (!formData.first_name_th.trim() || !formData.last_name_th.trim()) {
+      alert('กรุณากรอกชื่อและนามสกุลภาษาไทย');
       return;
     }
+
+    const full_name_th = formatFullNameTh(formData.rank_th, formData.first_name_th, formData.last_name_th);
 
     setLoading(true);
     try {
       const created = await personnelService.create({
         ...formData,
+        full_name_th,
         custom_fields: customFields,
       });
       router.push(`/personnel/${created.id}`);
@@ -223,21 +229,52 @@ function NewPersonnelForm() {
             <span>ยศ ชื่อ-นามสกุล และข้อมูลบุคคล</span>
           </div>
 
+          {/* 1. ยศ, ชื่อ, สกุล ภาษาไทย */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-            <div className="sm:col-span-2">
+            <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
-                ยศ ชื่อ-นามสกุล ภาษาไทย (full_name_th) *
+                ยศ (ไทย)
               </label>
               <input
                 type="text"
-                name="full_name_th"
-                placeholder="เช่น พ.ท. นฤเบศร์ บุญคุ้ม"
-                value={formData.full_name_th}
+                name="rank_th"
+                placeholder="เช่น พ.ท. หรือ ส.อ."
+                value={formData.rank_th}
+                onChange={handleChange}
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                ชื่อ (ไทย) *
+              </label>
+              <input
+                type="text"
+                name="first_name_th"
+                placeholder="เช่น นฤเบศร์"
+                value={formData.first_name_th}
                 onChange={handleChange}
                 required
                 className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                สกุล (ไทย) *
+              </label>
+              <input
+                type="text"
+                name="last_name_th"
+                placeholder="เช่น บุญคุ้ม"
+                value={formData.last_name_th}
+                onChange={handleChange}
+                required
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
                 ชื่อเล่น (nickname)
