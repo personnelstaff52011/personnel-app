@@ -18,9 +18,9 @@ const LOCAL_STORAGE_DISPLAY_FIELDS_KEY = 'engineer_division_display_fields';
 
 export const DEFAULT_DISPLAY_FIELDS: DisplayFieldSetting[] = [
   // 1. ข้อมูลยศและชื่อ
-  { key: 'rank_th', label: 'ยศ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชั้นยศภาษาไทย เช่น พ.ท., พ.อ., ส.อ.' },
-  { key: 'first_name_th', label: 'ชื่อ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชื่อตัวภาษาไทย' },
-  { key: 'last_name_th', label: 'สกุล (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'นามสกุลภาษาไทย' },
+  { key: 'rank_th', label: 'ยศ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: false, description: 'ชั้นยศภาษาไทย เช่น พ.ท., พ.อ., ส.อ.' },
+  { key: 'first_name_th', label: 'ชื่อ (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: false, description: 'ชื่อตัวภาษาไทย' },
+  { key: 'last_name_th', label: 'นามสกุล (ไทย)', category: 'ข้อมูลยศและชื่อ', visible: false, description: 'นามสกุลภาษาไทย' },
   { key: 'rank_en', label: 'RANK (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชั้นยศภาษาอังกฤษ เช่น LTC, MAJ, CPT' },
   { key: 'first_name_en', label: 'NAME (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'ชื่อตัวภาษาอังกฤษ' },
   { key: 'last_name_en', label: 'LASTNAME (EN)', category: 'ข้อมูลยศและชื่อ', visible: true, description: 'นามสกุลภาษาอังกฤษ' },

@@ -17,7 +17,7 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 import { personnelService } from '@/lib/personnelService';
-import { Personnel, FieldDefinition, DisplayFieldSetting, splitFullNameTh, formatFullNameTh } from '@/types/personnel';
+import { Personnel, FieldDefinition, DisplayFieldSetting } from '@/types/personnel';
 import { useAuth } from '@/context/AuthContext';
 import QuickActionBar from '@/components/QuickActionBar';
 import DeleteConfirmModal from '@/components/DeleteConfirmModal';
@@ -25,13 +25,27 @@ import DeleteConfirmModal from '@/components/DeleteConfirmModal';
 function formatBirthDate(dateStr?: string | null): string {
   if (!dateStr) return '-';
   try {
+    const thaiMonths = [
+      'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+      'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+    ];
+
+    // Handle standard YYYY-MM-DD
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      if (!isNaN(year) && !isNaN(month) && !isNaN(day) && month >= 0 && month < 12) {
+        const thaiYear = year > 2400 ? year : year + 543;
+        return `${day} ${thaiMonths[month]} ${thaiYear}`;
+      }
+    }
+
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return dateStr;
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+    const thaiYear = d.getFullYear() > 2400 ? d.getFullYear() : d.getFullYear() + 543;
+    return `${d.getDate()} ${thaiMonths[d.getMonth()]} ${thaiYear}`;
   } catch {
     return dateStr;
   }
@@ -244,21 +258,6 @@ export default function PersonnelDetailPage() {
 
         {/* 3. Detailed Grid Layout: Only render visible field cards */}
         <div className="space-y-3 sm:space-y-4">
-          {/* แถวยศและชื่อภาษาไทย */}
-          {(isFieldVisible('rank_th') || isFieldVisible('first_name_th') || isFieldVisible('last_name_th')) && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-              {isFieldVisible('rank_th') && (
-                <GridItem label="ยศ (ไทย)" value={personnel.rank_th || splitFullNameTh(personnel.full_name_th).rank_th} />
-              )}
-              {isFieldVisible('first_name_th') && (
-                <GridItem label="ชื่อ (ไทย)" value={personnel.first_name_th || splitFullNameTh(personnel.full_name_th).first_name_th} />
-              )}
-              {isFieldVisible('last_name_th') && (
-                <GridItem label="สกุล (ไทย)" value={personnel.last_name_th || splitFullNameTh(personnel.full_name_th).last_name_th} />
-              )}
-            </div>
-          )}
-
           {/* แถวที่ 1: RANK (EN), NAME (EN), LASTNAME (EN), หมายเลขประจำตัว */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
             {isFieldVisible('rank_en') && <GridItem label="RANK (EN)" value={personnel.rank_en} />}
