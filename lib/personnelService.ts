@@ -29,7 +29,7 @@ export const DEFAULT_DISPLAY_FIELDS: DisplayFieldSetting[] = [
   // 2. ข้อมูลสังกัดและตำแหน่ง
   { key: 'citizen_id', label: 'หมายเลขประชาชน', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'เลขประจำตัวประชาชน 13 หลัก' },
   { key: 'regular_position', label: 'ตำแหน่งปกติ', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'ตำแหน่งตามโครงสร้างอัตราปกติ' },
-  { key: 'salary_step', label: 'ขั้นเงินเดือน', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'ขั้นเงินเดือน เช่น น.๓/๑๘.๕' },
+  { key: 'salary_step', label: 'ขั้นเงินเดือน', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: false, description: 'ขั้นเงินเดือน เช่น น.๓/๑๘.๕' },
 
   // 3. ข้อมูลส่วนตัวและการแพทย์
   { key: 'blood_group', label: 'กลุ่มเลือด', category: 'ข้อมูลส่วนตัวและการแพทย์', visible: true, description: 'หมู่เลือด A, B, O, AB สำหรับการแพทย์' },

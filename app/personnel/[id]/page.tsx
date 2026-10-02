@@ -261,11 +261,10 @@ export default function PersonnelDetailPage() {
             {isFieldVisible('military_id') && <GridItem label="หมายเลขประจำตัว" value={personnel.military_id} />}
           </div>
 
-          {/* แถวที่ 2: หมายเลขประชาชน, ตำแหน่งปกติ, ขั้นเงินเดือน */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
+          {/* แถวที่ 2: หมายเลขประชาชน, ตำแหน่งปกติ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             {isFieldVisible('citizen_id') && <GridItem label="หมายเลขประชาชน" value={personnel.citizen_id} />}
             {isFieldVisible('regular_position') && <GridItem label="ตำแหน่งปกติ" value={personnel.regular_position} />}
-            {isFieldVisible('salary_step') && <GridItem label="ขั้นเงินเดือน" value={personnel.salary_step} />}
           </div>
 
           {/* แถวที่ 3: กลุ่มเลือด, เบอร์ติดต่อ, ส่วนงาน, ศาสนา */}
