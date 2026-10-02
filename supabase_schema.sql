@@ -3,6 +3,9 @@
 -- Engineer Division Personnel Management System - Supabase Schema
 -- ==========================================================
 
+-- คำสั่งอัปเดตฟิลด์สถานะกำลังพล (กรณีมีตารางอยู่แล้ว ให้รันใน SQL Editor):
+-- ALTER TABLE public.personnel ADD COLUMN IF NOT EXISTS duty_status VARCHAR(50) DEFAULT 'บรรจุ';
+
 -- 1. สร้างตาราง personnel
 CREATE TABLE IF NOT EXISTS public.personnel (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -20,6 +23,7 @@ CREATE TABLE IF NOT EXISTS public.personnel (
     citizen_id VARCHAR(50),
     field_position VARCHAR(255),
     regular_position VARCHAR(255),
+    duty_status VARCHAR(50) DEFAULT 'บรรจุ', -- สถานะกำลังพล: 'บรรจุ' หรือ 'ช่วยราชการ'
     salary_step VARCHAR(50),
     blood_group VARCHAR(10),
     phone_number VARCHAR(50),

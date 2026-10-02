@@ -117,6 +117,7 @@ function ExcelImportComponent() {
           military_id: String(row['หมายเลขประจำตัวทหาร'] || row['military_id'] || '').trim() || null,
           citizen_id: String(row['หมายเลขประชาชน'] || row['citizen_id'] || '').trim() || null,
           regular_position: String(row['ตำแหน่งปกติ'] || row['regular_position'] || '').trim() || null,
+          duty_status: String(row['สถานะกำลังพล'] || row['duty_status'] || '').trim() === 'ช่วยราชการ' ? 'ช่วยราชการ' : 'บรรจุ',
           salary_step: String(row['ขั้นเงินเดือน'] || row['salary_step'] || '').trim() || null,
           blood_group: String(row['กลุ่มเลือด'] || row['blood_group'] || 'O').trim() || null,
           phone_number: String(row['เบอร์ติดต่อ'] || row['phone_number'] || '').trim() || null,

@@ -6,21 +6,20 @@ import {
   Users, 
   Award, 
   Building2, 
-  Camera, 
   UserPlus, 
   FileSpreadsheet, 
   ArrowRight,
   RefreshCw,
   AlertCircle,
   Phone,
-  User
+  User,
+  UserCheck
 } from 'lucide-react';
 import StatCard from '@/components/StatCard';
 import DepartmentBarChart from '@/components/charts/DepartmentBarChart';
-import BloodGroupDonutChart from '@/components/charts/BloodGroupDonutChart';
 import RankBreakdownChart from '@/components/charts/RankBreakdownChart';
 import { personnelService } from '@/lib/personnelService';
-import { Personnel, KPIStats, DepartmentStat, BloodGroupStat, RankStat } from '@/types/personnel';
+import { Personnel, KPIStats, DepartmentStat, RankStat } from '@/types/personnel';
 import { isSupabaseConfigured } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 
@@ -29,7 +28,6 @@ export default function DashboardPage() {
   const [personnelList, setPersonnelList] = useState<Personnel[]>([]);
   const [stats, setStats] = useState<KPIStats | null>(null);
   const [deptStats, setDeptStats] = useState<DepartmentStat[]>([]);
-  const [bloodStats, setBloodStats] = useState<BloodGroupStat[]>([]);
   const [rankStats, setRankStats] = useState<RankStat[]>([]);
   const [loading, setLoading] = useState(true);
   const [isLiveSupabase, setIsLiveSupabase] = useState(false);
@@ -41,7 +39,6 @@ export default function DashboardPage() {
       setPersonnelList(data);
       setStats(personnelService.calculateKPIs(data));
       setDeptStats(personnelService.getDepartmentStats(data));
-      setBloodStats(personnelService.getBloodGroupStats(data));
       setRankStats(personnelService.getRankBreakdown(data));
       setIsLiveSupabase(isSupabaseConfigured());
     } catch (err) {
@@ -75,12 +72,12 @@ export default function DashboardPage() {
             ระบบสารสนเทศข้อมูลกำลังพล
           </h1>
           <p className="text-slate-200 text-sm sm:text-base mt-1.5 max-w-xl leading-relaxed">
-            สถิติกำลังพล ความพร้อมทางการแพทย์ และการกระจายตัวตามกองร้อย
+            สถิติกำลังพล และการกระจายตัวตามฝ่าย/ตอน
           </p>
 
-          {/* Quick Action Buttons: Conditioned on Role */}
+          {/* Quick Action Buttons: Admin or Refresh */}
           <div className="flex items-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-none">
-            {isAdmin ? (
+            {isAdmin && (
               <>
                 <Link
                   href="/personnel/new"
@@ -95,23 +92,6 @@ export default function DashboardPage() {
                 >
                   <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
                   <span>นำเข้า Excel</span>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/personnel"
-                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition-transform active:scale-95 flex-shrink-0"
-                >
-                  <Users className="w-4 h-4" />
-                  <span>ดูทำเนียบกำลังพล</span>
-                </Link>
-                <Link
-                  href="/settings/profile"
-                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-sm border border-white/20 transition-transform active:scale-95 flex-shrink-0"
-                >
-                  <User className="w-4 h-4 text-blue-400" />
-                  <span>ตั้งค่าผู้ใช้</span>
                 </Link>
               </>
             )}
@@ -159,8 +139,8 @@ export default function DashboardPage() {
           iconBg="bg-amber-50"
         />
         <StatCard
-          title="หน่วย / กองร้อย"
-          value={stats ? `${stats.departmentsCount} หน่วย` : '-'}
+          title="ฝ่าย/ตอน"
+          value={stats ? `${stats.departmentsCount} ส่วน` : '-'}
           subtitle="ขึ้นตรง"
           subValue="ทุกสายงาน"
           icon={Building2}
@@ -168,51 +148,32 @@ export default function DashboardPage() {
           iconBg="bg-indigo-50"
         />
         <StatCard
-          title="รูปถ่ายสมบูรณ์"
-          value={stats ? `${stats.withPhotoCount}` : '-'}
-          subtitle="ขาดรูป"
-          subValue={stats ? `${stats.withoutPhotoCount} นาย` : '-'}
-          icon={Camera}
+          title="กำลังพลช่วยราชการ"
+          value={stats ? `${stats.detachedCount} นาย` : '-'}
+          subtitle="บรรจุจริง"
+          subValue={stats ? `${stats.assignedCount} นาย` : '-'}
+          icon={UserCheck}
           iconColor="text-emerald-600"
           iconBg="bg-emerald-50"
-          trend={stats ? `${Math.round((stats.withPhotoCount / (stats.totalPersonnel || 1)) * 100)}%` : undefined}
         />
       </div>
 
-      {/* Interactive Charts: Stacked on mobile */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Chart 1: Blood Group (Essential for Medical Readiness) */}
-        <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h2 className="text-base font-bold text-gray-900">
-                สัดส่วนกลุ่มเลือด (Medical)
-              </h2>
-              <p className="text-xs text-gray-500">
-                A, B, O, AB สำหรับการส่งกำลังทางการแพทย์
-              </p>
-            </div>
+      {/* Department Distribution (Full Width) */}
+      <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs">
+        <div className="flex items-center justify-between mb-2">
+          <div>
+            <h2 className="text-base font-bold text-gray-900">
+              กำลังพลแยกตามฝ่าย/ตอน
+            </h2>
+            <p className="text-xs text-gray-500">
+              Department & Section Distribution
+            </p>
           </div>
-          <BloodGroupDonutChart data={bloodStats} />
+          <span className="text-xs font-bold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg">
+            {deptStats.length} ส่วนงาน
+          </span>
         </div>
-
-        {/* Chart 2: Department Distribution */}
-        <div className="bg-white rounded-3xl border border-gray-200/90 p-4 sm:p-5 shadow-xs lg:col-span-2">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h2 className="text-base font-bold text-gray-900">
-                กำลังพลแยกตามส่วนงาน/กองร้อย
-              </h2>
-              <p className="text-xs text-gray-500">
-                Company & Department Distribution
-              </p>
-            </div>
-            <span className="text-xs font-bold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg">
-              {deptStats.length} ส่วนงาน
-            </span>
-          </div>
-          <DepartmentBarChart data={deptStats} />
-        </div>
+        <DepartmentBarChart data={deptStats} />
       </div>
 
       {/* Rank Breakdown and Recent Personnel Grid */}

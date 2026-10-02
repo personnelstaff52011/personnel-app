@@ -52,6 +52,7 @@ function EditPersonnelForm() {
     blood_group: 'O',
     phone_number: '',
     department: '',
+    duty_status: 'บรรจุ',
     religion: 'พุทธ',
     birth_date: '',
     photo_url: '',
@@ -90,6 +91,7 @@ function EditPersonnelForm() {
             citizen_id: personnel.citizen_id || '',
             regular_position: personnel.regular_position || '',
             salary_step: personnel.salary_step || '',
+            duty_status: personnel.duty_status || 'บรรจุ',
             blood_group: personnel.blood_group || 'O',
             phone_number: personnel.phone_number || '',
             department: personnel.department || '',
@@ -195,7 +197,7 @@ function EditPersonnelForm() {
             <span>ข้อมูลสังกัดและรหัสประจำตัว</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
                 ลำดับหมายเลข (seq_no) *
@@ -212,7 +214,7 @@ function EditPersonnelForm() {
             </div>
             <div>
               <label className="block text-sm font-bold text-gray-800 mb-1.5">
-                ส่วนงาน / กองร้อย (department)
+                ส่วนงาน / ฝ่าย / ตอน (department)
               </label>
               <input
                 type="text"
@@ -221,6 +223,20 @@ function EditPersonnelForm() {
                 onChange={handleChange}
                 className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                สถานะกำลังพล (duty_status) *
+              </label>
+              <select
+                name="duty_status"
+                value={formData.duty_status}
+                onChange={handleChange}
+                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
+              >
+                <option value="บรรจุ">บรรจุ (ปกติ)</option>
+                <option value="ช่วยราชการ">ช่วยราชการ</option>
+              </select>
             </div>
           </div>
 

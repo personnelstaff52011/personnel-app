@@ -21,9 +21,16 @@ export default function PersonnelCard({ personnel }: PersonnelCardProps) {
       <div>
         {/* Top Badges */}
         <div className="flex items-center justify-between gap-2 mb-3">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-900 text-amber-400 text-sm font-extrabold shadow-xs">
-            {personnel.seq_no}
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-900 text-amber-400 text-sm font-extrabold shadow-xs">
+              {personnel.seq_no}
+            </span>
+            {personnel.duty_status === 'ช่วยราชการ' && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                ช่วยราชการ
+              </span>
+            )}
+          </div>
           {personnel.blood_group && (
             <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-extrabold bg-red-50 text-red-700 border border-red-200">
               เลือด {personnel.blood_group}

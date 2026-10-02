@@ -36,6 +36,7 @@ export default function PersonnelDirectoryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDepartment, setFilterDepartment] = useState('ALL');
   const [filterRank, setFilterRank] = useState('ALL');
+  const [filterDutyStatus, setFilterDutyStatus] = useState<string>('ALL');
 
   // Delete state
   const [targetPersonnel, setTargetPersonnel] = useState<Personnel | null>(null);
@@ -101,21 +102,29 @@ export default function PersonnelDirectoryPage() {
       const matchesRank =
         filterRank === 'ALL' || p.rank_en === filterRank;
 
-      return matchesSearch && matchesDept && matchesRank;
+      const matchesDuty =
+        filterDutyStatus === 'ALL' ||
+        (filterDutyStatus === 'ช่วยราชการ'
+          ? p.duty_status === 'ช่วยราชการ'
+          : p.duty_status !== 'ช่วยราชการ');
+
+      return matchesSearch && matchesDept && matchesRank && matchesDuty;
     });
-  }, [personnelList, searchTerm, filterDepartment, filterRank]);
+  }, [personnelList, searchTerm, filterDepartment, filterRank, filterDutyStatus]);
 
   // Reset filters
   const handleResetFilters = () => {
     setSearchTerm('');
     setFilterDepartment('ALL');
     setFilterRank('ALL');
+    setFilterDutyStatus('ALL');
   };
 
   const hasActiveFilters = 
     searchTerm !== '' || 
     filterDepartment !== 'ALL' || 
-    filterRank !== 'ALL';
+    filterRank !== 'ALL' ||
+    filterDutyStatus !== 'ALL';
 
   // Export to Excel (.xlsx)
   const handleExportExcel = () => {
@@ -144,6 +153,7 @@ export default function PersonnelDirectoryPage() {
         'หมายเลขประจำตัวทหาร': p.military_id || '',
         'หมายเลขประชาชน': p.citizen_id || '',
         'ตำแหน่งปกติ': p.regular_position || '',
+        'สถานะกำลังพล': p.duty_status || 'บรรจุ',
         'ขั้นเงินเดือน': p.salary_step || '',
         'กลุ่มเลือด': p.blood_group || '',
         'เบอร์ติดต่อ': p.phone_number || '',
@@ -293,7 +303,7 @@ export default function PersonnelDirectoryPage() {
         {/* Active Filter Chips & Reset */}
         {hasActiveFilters && (
           <div className="flex items-center justify-between text-xs sm:text-sm pt-1.5 border-t border-gray-100">
-            <div className="flex items-center space-x-1.5 text-xs text-gray-600 truncate">
+            <div className="flex items-center space-x-1.5 text-xs text-gray-600 truncate flex-wrap gap-1">
               <span>กำลังกรอง:</span>
               {filterDepartment !== 'ALL' && (
                 <span className="bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-lg font-bold truncate">
@@ -303,6 +313,11 @@ export default function PersonnelDirectoryPage() {
               {filterRank !== 'ALL' && (
                 <span className="bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-lg font-bold">
                   {filterRank}
+                </span>
+              )}
+              {filterDutyStatus !== 'ALL' && (
+                <span className="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-lg font-bold">
+                  สถานะ: {filterDutyStatus}
                 </span>
               )}
             </div>
@@ -318,9 +333,22 @@ export default function PersonnelDirectoryPage() {
 
         {/* Expandable Advanced Filters */}
         {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-gray-100 text-xs sm:text-sm animate-in fade-in duration-150">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-gray-100 text-xs sm:text-sm animate-in fade-in duration-150">
             <div>
-              <label className="block text-gray-700 font-bold mb-1">ส่วนงาน / กองร้อย</label>
+              <label className="block text-gray-700 font-bold mb-1">สถานะกำลังพล</label>
+              <select
+                value={filterDutyStatus}
+                onChange={(e) => setFilterDutyStatus(e.target.value)}
+                className="w-full py-2.5 px-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              >
+                <option value="ALL">สถานะทั้งหมด (All)</option>
+                <option value="บรรจุ">บรรจุ (ปกติ)</option>
+                <option value="ช่วยราชการ">ช่วยราชการ</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-bold mb-1">ส่วนงาน / ฝ่าย / ตอน</label>
               <select
                 value={filterDepartment}
                 onChange={(e) => setFilterDepartment(e.target.value)}

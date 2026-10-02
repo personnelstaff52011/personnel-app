@@ -29,6 +29,7 @@ export const DEFAULT_DISPLAY_FIELDS: DisplayFieldSetting[] = [
   // 2. ข้อมูลสังกัดและตำแหน่ง
   { key: 'citizen_id', label: 'หมายเลขประชาชน', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'เลขประจำตัวประชาชน 13 หลัก' },
   { key: 'regular_position', label: 'ตำแหน่งปกติ', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'ตำแหน่งตามโครงสร้างอัตราปกติ' },
+  { key: 'duty_status', label: 'สถานะกำลังพล (บรรจุ / ช่วยราชการ)', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: true, description: 'สถานะการปฏิบัติหน้าที่ บรรจุ หรือ ช่วยราชการ' },
   { key: 'salary_step', label: 'ขั้นเงินเดือน', category: 'ข้อมูลสังกัดและตำแหน่ง', visible: false, description: 'ขั้นเงินเดือน เช่น น.๓/๑๘.๕' },
 
   // 3. ข้อมูลส่วนตัวและการแพทย์
@@ -86,6 +87,7 @@ const getLocalPersonnel = (): Personnel[] => {
         last_name_th,
         full_name_th,
         photo_url,
+        duty_status: p.duty_status || 'บรรจุ',
         field_position: undefined,
         passport_no: undefined,
         custom_fields: cleanCustom,
@@ -188,6 +190,7 @@ export const personnelService = {
       first_name_th,
       last_name_th,
       full_name_th,
+      duty_status: personnel.duty_status || 'บรรจุ',
       service_code: personnel.service_code || `PKF-THAI-${String(personnel.seq_no || 1).padStart(5, '0')}`,
       id: newId,
       created_at: now,
@@ -331,6 +334,7 @@ export const personnelService = {
     const now = new Date().toISOString();
     const formattedList = personnelList.map((p, index) => ({
       ...p,
+      duty_status: p.duty_status || 'บรรจุ',
       service_code: p.service_code || `PKF-THAI-${String(p.seq_no || (index + 1)).padStart(5, '0')}`,
       id: generateUUID(),
       created_at: now,
@@ -411,6 +415,8 @@ export const personnelService = {
     let commissionedOfficers = 0;
     let nonCommissionedOfficers = 0;
     let withPhotoCount = 0;
+    let assignedCount = 0;
+    let detachedCount = 0;
     const departmentSet = new Set<string>();
 
     const commissionedRanks = ['พ.อ.', 'พ.ท.', 'พ.ต.', 'ร.อ.', 'ร.ท.', 'ร.ต.', 'COL', 'LTC', 'MAJ', 'CPT', '1LT', '2LT'];
@@ -421,6 +427,13 @@ export const personnelService = {
       }
       if (p.department && p.department.trim() !== '') {
         departmentSet.add(p.department.trim());
+      }
+
+      // ตรวจสอบสถานะการปฏิบัติหน้าที่
+      if (p.duty_status === 'ช่วยราชการ') {
+        detachedCount++;
+      } else {
+        assignedCount++;
       }
 
       // ตรวจสอบชั้นยศ
@@ -445,6 +458,8 @@ export const personnelService = {
       departmentsCount: departmentSet.size,
       withPhotoCount,
       withoutPhotoCount: totalPersonnel - withPhotoCount,
+      assignedCount,
+      detachedCount,
     };
   },
 

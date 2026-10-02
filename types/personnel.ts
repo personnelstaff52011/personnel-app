@@ -1,3 +1,5 @@
+export type DutyStatus = 'บรรจุ' | 'ช่วยราชการ';
+
 export interface Personnel {
   id: string;
   service_code?: string | null;
@@ -15,6 +17,7 @@ export interface Personnel {
   field_position?: string | null;
   regular_position?: string | null;
   salary_step?: string | null;
+  duty_status?: DutyStatus | string | null;
   blood_group?: string | null;
   phone_number?: string | null;
   department?: string | null;
@@ -84,6 +87,8 @@ export interface KPIStats {
   departmentsCount: number;
   withPhotoCount: number;
   withoutPhotoCount: number;
+  assignedCount: number;
+  detachedCount: number;
 }
 
 export interface DepartmentStat {
