@@ -218,11 +218,6 @@ export default function PersonnelDetailPage() {
             )}
           </div>
 
-          {/* Large Sequence Number (seq_no) */}
-          <div className="inline-flex items-center justify-center min-w-[3.25rem] h-10 px-4 rounded-xl bg-slate-900 text-amber-400 font-extrabold text-xl shadow-xs mb-2">
-            {personnel.seq_no}
-          </div>
-
           {/* Thai Rank & Full Name */}
           <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
             {personnel.full_name_th}
