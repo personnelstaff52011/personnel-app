@@ -9,7 +9,6 @@ import {
   ArrowRight, 
   AlertCircle, 
   Loader2, 
-  ShieldCheck, 
   Info 
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
@@ -45,12 +44,6 @@ export default function LoginPage() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const fillSamplePersonnel = (sampleCitizenId: string, sampleMilitaryId: string) => {
-    setCitizenId(sampleCitizenId);
-    setPassword(sampleMilitaryId);
-    setError('');
   };
 
   return (
@@ -149,55 +142,6 @@ export default function LoginPage() {
             <span>{isSubmitting ? 'กำลังตรวจสอบ...' : 'เข้าสู่ระบบ'}</span>
           </button>
         </form>
-
-        {/* Quick Testing Samples (Click to auto-fill for testing) */}
-        <div className="pt-4 border-t border-gray-100 space-y-2.5">
-          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider text-center">
-            ตัวอย่างกำลังพลในฐานข้อมูล (แตะเพื่อกรอกทดสอบ)
-          </p>
-
-          <div className="space-y-2">
-            <button
-              type="button"
-              onClick={() => fillSamplePersonnel('1-7099-00124-91-2', '1309900213')}
-              className="w-full p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-200 text-left text-xs sm:text-sm transition-colors flex items-center justify-between"
-            >
-              <div>
-                <span className="font-bold text-gray-900 text-sm block">พ.ท. นฤเบศร์ บุญคุ้ม</span>
-                <span className="text-gray-500 text-xs block">เลขประชาชน: 1-7099-00124-91-2</span>
-              </div>
-              <span className="text-xs font-mono text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg font-bold border border-blue-100">
-                เลขทหาร: 1309900213
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => fillSamplePersonnel('1-1004-00234-88-1', '1258800112')}
-              className="w-full p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-200 text-left text-xs sm:text-sm transition-colors flex items-center justify-between"
-            >
-              <div>
-                <span className="font-bold text-gray-900 text-sm block">พ.อ. เกียรติศักดิ์ พรหมมินทร์</span>
-                <span className="text-gray-500 text-xs block">เลขประชาชน: 1-1004-00234-88-1</span>
-              </div>
-              <span className="text-xs font-mono text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg font-bold border border-blue-100">
-                เลขทหาร: 1258800112
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => fillSamplePersonnel('admin', 'admin123')}
-              className="w-full p-3 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 text-left text-xs sm:text-sm transition-colors flex items-center justify-between"
-            >
-              <div className="flex items-center space-x-2 font-bold">
-                <ShieldCheck className="w-4 h-4 text-amber-400" />
-                <span>เข้าสู่ระบบในฐานะ Admin ส่วนกลาง</span>
-              </div>
-              <span className="text-xs font-mono text-amber-300 font-bold">admin / admin123</span>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
