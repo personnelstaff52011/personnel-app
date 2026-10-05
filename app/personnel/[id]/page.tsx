@@ -200,7 +200,7 @@ export default function PersonnelDetailPage() {
         {/* 2. Centered Profile Header */}
         <div className="flex flex-col items-center text-center">
           {/* Rounded portrait photo */}
-          <div className="relative w-40 h-52 sm:w-52 sm:h-68 rounded-3xl overflow-hidden bg-slate-100 border-4 border-white shadow-xl flex items-center justify-center mb-4 ring-2 ring-slate-100">
+          <div className="relative w-32 h-42 sm:w-40 sm:h-52 rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-100 border-4 border-white shadow-lg flex items-center justify-center mb-3 ring-2 ring-slate-100">
             {personnel.photo_url ? (
               <Image
                 src={personnel.photo_url}
@@ -212,8 +212,8 @@ export default function PersonnelDetailPage() {
               />
             ) : (
               <div className="flex flex-col items-center justify-center text-slate-400 p-4">
-                <User className="w-16 h-16 sm:w-20 sm:h-20" />
-                <span className="text-xs sm:text-sm text-slate-400 mt-2 font-semibold">ไม่มีรูปถ่าย</span>
+                <User className="w-12 h-12 sm:w-16 sm:h-16" />
+                <span className="text-xs sm:text-sm text-slate-400 mt-1.5 font-semibold">ไม่มีรูปถ่าย</span>
               </div>
             )}
           </div>

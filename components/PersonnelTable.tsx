@@ -30,7 +30,7 @@ export default function PersonnelTable({
           <thead className="bg-slate-50 border-b border-slate-200 text-sm sm:text-base font-black text-slate-800">
             <tr>
               <th scope="col" className="px-4 py-4 text-center w-16">ลำดับ</th>
-              <th scope="col" className="px-3 py-4 w-18">รูปถ่าย</th>
+              <th scope="col" className="px-3 py-4 w-14 text-center">รูปถ่าย</th>
               <th scope="col" className="px-4 py-4">ยศ ชื่อ-นามสกุล (ไทย / อังกฤษ)</th>
               <th scope="col" className="px-4 py-4">ตำแหน่ง</th>
               <th scope="col" className="px-4 py-4">ส่วนงาน/กองร้อย</th>
@@ -43,15 +43,15 @@ export default function PersonnelTable({
             {personnelList.map((p) => (
               <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
                 {/* Sequence No */}
-                <td className="px-4 py-3.5 text-center font-bold text-slate-900">
+                <td className="px-4 py-3 text-center font-bold text-slate-900">
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-100 text-slate-900 text-sm font-black">
                     {p.seq_no}
                   </span>
                 </td>
 
                 {/* Avatar */}
-                <td className="px-3 py-3.5">
-                  <div className="relative w-12 h-14 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-2xs">
+                <td className="px-3 py-2.5 text-center">
+                  <div className="relative w-9 h-11 sm:w-10 sm:h-12 rounded-lg sm:rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-2xs mx-auto">
                     {p.photo_url ? (
                       <img
                         src={p.photo_url}
@@ -60,7 +60,7 @@ export default function PersonnelTable({
                         loading="lazy"
                       />
                     ) : (
-                      <User className="w-6 h-6 text-slate-400" />
+                      <User className="w-5 h-5 text-slate-400" />
                     )}
                   </div>
                 </td>
