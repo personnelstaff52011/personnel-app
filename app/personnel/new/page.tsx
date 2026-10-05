@@ -119,9 +119,9 @@ function NewPersonnelForm() {
         custom_fields: customFields,
       });
       router.push(`/personnel/${created.id}`);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to create personnel:', err);
-      alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+      alert(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${err?.message || 'โปรดลองใหม่อีกครั้ง'}`);
     } finally {
       setLoading(false);
     }

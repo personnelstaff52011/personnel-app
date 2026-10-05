@@ -144,9 +144,9 @@ function EditPersonnelForm() {
         custom_fields: customFields,
       });
       router.push(`/personnel/${id}`);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to update personnel:', err);
-      alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+      alert(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${err?.message || 'โปรดลองใหม่อีกครั้ง'}`);
     } finally {
       setLoading(false);
     }

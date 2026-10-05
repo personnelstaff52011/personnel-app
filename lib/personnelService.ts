@@ -131,6 +131,98 @@ const saveLocalFields = (list: FieldDefinition[]): void => {
   }
 };
 
+const SUPABASE_PERSONNEL_COLUMNS = new Set([
+  'id',
+  'service_code',
+  'seq_no',
+  'full_name_th',
+  'nickname',
+  'rank_en',
+  'first_name_en',
+  'last_name_en',
+  'military_id',
+  'citizen_id',
+  'field_position',
+  'regular_position',
+  'salary_step',
+  'blood_group',
+  'phone_number',
+  'department',
+  'religion',
+  'birth_date',
+  'passport_no',
+  'photo_url',
+  'custom_fields',
+  'created_at',
+  'updated_at',
+]);
+
+const prepareSupabasePayload = (record: Record<string, any>) => {
+  const clean: Record<string, any> = {};
+  const custom = { ...(record.custom_fields || {}) };
+
+  // Store client/extra fields safely in custom_fields (JSONB)
+  if (record.rank_th) custom.rank_th = record.rank_th;
+  if (record.first_name_th) custom.first_name_th = record.first_name_th;
+  if (record.last_name_th) custom.last_name_th = record.last_name_th;
+  if (record.duty_status) custom.duty_status = record.duty_status;
+
+  for (const [key, val] of Object.entries(record)) {
+    if (SUPABASE_PERSONNEL_COLUMNS.has(key)) {
+      if (key === 'birth_date') {
+        clean[key] = (val && String(val).trim() !== '') ? String(val).trim() : null;
+      } else if (key === 'service_code') {
+        clean[key] = (val && String(val).trim() !== '') ? String(val).trim() : `PKF-THAI-${String(record.seq_no || 1).padStart(5, '0')}`;
+      } else if (key === 'seq_no') {
+        clean[key] = Number(val) || 1;
+      } else if (val === '') {
+        clean[key] = null;
+      } else {
+        clean[key] = val;
+      }
+    }
+  }
+
+  // Ensure service_code is always set if missing or empty (required by PostgreSQL NOT NULL constraint)
+  if (!clean.service_code && ('seq_no' in record || 'service_code' in record || !record.id)) {
+    clean.service_code = (record.service_code && String(record.service_code).trim() !== '')
+      ? String(record.service_code).trim()
+      : `PKF-THAI-${String(record.seq_no || 1).padStart(5, '0')}`;
+  }
+
+  // Ensure full_name_th is always valid string
+  if (!clean.full_name_th && (record.rank_th || record.first_name_th || record.last_name_th)) {
+    clean.full_name_th = formatFullNameTh(record.rank_th, record.first_name_th, record.last_name_th);
+  }
+
+  clean.custom_fields = custom;
+  return clean;
+};
+
+const mapFromSupabase = (p: any): Personnel => {
+  if (!p) return p;
+  const custom = p.custom_fields || {};
+  const split = splitFullNameTh(p.full_name_th || '');
+  const rank_th = custom.rank_th || p.rank_th || split.rank_th || '';
+  const first_name_th = custom.first_name_th || p.first_name_th || split.first_name_th || '';
+  const last_name_th = custom.last_name_th || p.last_name_th || split.last_name_th || '';
+  const full_name_th = p.full_name_th || formatFullNameTh(rank_th, first_name_th, last_name_th);
+  const duty_status = custom.duty_status || p.duty_status || 'บรรจุ';
+
+  const fallbackPhoto = initialPhotoMap.get(p.id) || '';
+  const photo_url = (p.photo_url && p.photo_url.trim() !== '') ? p.photo_url : fallbackPhoto;
+
+  return {
+    ...p,
+    rank_th,
+    first_name_th,
+    last_name_th,
+    full_name_th,
+    duty_status,
+    photo_url,
+  };
+};
+
 export const personnelService = {
   // 1. ดึงรายชื่อกำลังพลทั้งหมด
   async getAll(): Promise<Personnel[]> {
@@ -142,7 +234,7 @@ export const personnelService = {
           .order('seq_no', { ascending: true });
 
         if (!error && data && data.length > 0) {
-          return data as Personnel[];
+          return data.map(mapFromSupabase);
         }
       } catch (err) {
         console.warn('Supabase fetch failed, falling back to local data:', err);
@@ -162,7 +254,7 @@ export const personnelService = {
           .single();
 
         if (!error && data) {
-          return data as Personnel;
+          return mapFromSupabase(data);
         }
       } catch (err) {
         console.warn('Supabase getById failed, checking local:', err);
@@ -199,17 +291,27 @@ export const personnelService = {
 
     if (isSupabaseConfigured()) {
       try {
+        const payload = prepareSupabasePayload(newPersonnel);
         const { data, error } = await supabase
           .from('personnel')
-          .insert([newPersonnel])
+          .insert([payload])
           .select()
           .single();
 
         if (!error && data) {
-          return data as Personnel;
+          const created = mapFromSupabase(data);
+          const list = getLocalPersonnel();
+          const filtered = list.filter((p) => p.id !== created.id);
+          filtered.push(created);
+          saveLocalPersonnel(filtered);
+          return created;
+        } else if (error) {
+          console.error('Supabase create error:', error);
+          throw new Error(error.message || 'บันทึกข้อมูลไปยังฐานข้อมูลไม่สำเร็จ');
         }
-      } catch (err) {
-        console.warn('Supabase create failed, saving to local fallback:', err);
+      } catch (err: any) {
+        console.error('Supabase create failed:', err);
+        throw err;
       }
     }
 
@@ -252,18 +354,30 @@ export const personnelService = {
 
     if (isSupabaseConfigured()) {
       try {
+        const payload = prepareSupabasePayload(updatedData);
         const { data, error } = await supabase
           .from('personnel')
-          .update(updatedData)
+          .update(payload)
           .eq('id', id)
           .select()
           .single();
 
         if (!error && data) {
-          return data as Personnel;
+          const updated = mapFromSupabase(data);
+          const list = getLocalPersonnel();
+          const index = list.findIndex((p) => p.id === id);
+          if (index !== -1) {
+            list[index] = updated;
+            saveLocalPersonnel(list);
+          }
+          return updated;
+        } else if (error) {
+          console.error('Supabase update error:', error);
+          throw new Error(error.message || 'บันทึกการแก้ไขข้อมูลไม่สำเร็จ');
         }
-      } catch (err) {
-        console.warn('Supabase update failed, saving locally:', err);
+      } catch (err: any) {
+        console.error('Supabase update failed:', err);
+        throw err;
       }
     }
 
@@ -332,23 +446,40 @@ export const personnelService = {
   // 7. Bulk Insert (สำหรับ Excel Import)
   async bulkInsert(personnelList: Array<Omit<Personnel, 'id' | 'created_at' | 'updated_at'>>): Promise<number> {
     const now = new Date().toISOString();
-    const formattedList = personnelList.map((p, index) => ({
-      ...p,
-      duty_status: p.duty_status || 'บรรจุ',
-      service_code: p.service_code || `PKF-THAI-${String(p.seq_no || (index + 1)).padStart(5, '0')}`,
-      id: generateUUID(),
-      created_at: now,
-      updated_at: now,
-    }));
+    const formattedList = personnelList.map((p, index) => {
+      const split = splitFullNameTh(p.full_name_th || '');
+      const rank_th = (p.rank_th !== undefined && p.rank_th !== null && p.rank_th !== '') ? p.rank_th : split.rank_th;
+      const first_name_th = (p.first_name_th !== undefined && p.first_name_th !== null && p.first_name_th !== '') ? p.first_name_th : split.first_name_th;
+      const last_name_th = (p.last_name_th !== undefined && p.last_name_th !== null && p.last_name_th !== '') ? p.last_name_th : split.last_name_th;
+      const full_name_th = formatFullNameTh(rank_th, first_name_th, last_name_th) || p.full_name_th || '';
+
+      return {
+        ...p,
+        rank_th,
+        first_name_th,
+        last_name_th,
+        full_name_th,
+        duty_status: p.duty_status || 'บรรจุ',
+        service_code: p.service_code || `PKF-THAI-${String(p.seq_no || (index + 1)).padStart(5, '0')}`,
+        id: generateUUID(),
+        created_at: now,
+        updated_at: now,
+      };
+    });
 
     if (isSupabaseConfigured()) {
       try {
-        const { data, error } = await supabase.from('personnel').insert(formattedList).select();
+        const payloads = formattedList.map(prepareSupabasePayload);
+        const { data, error } = await supabase.from('personnel').insert(payloads).select();
         if (!error && data) {
           return data.length;
+        } else if (error) {
+          console.error('Supabase bulkInsert error:', error);
+          throw new Error(error.message || 'นำเข้าข้อมูลไปยังฐานข้อมูลไม่สำเร็จ');
         }
-      } catch (err) {
-        console.warn('Supabase bulk insert failed, saving locally:', err);
+      } catch (err: any) {
+        console.error('Supabase bulk insert failed:', err);
+        throw err;
       }
     }
 
