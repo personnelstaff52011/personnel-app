@@ -55,37 +55,37 @@ export default function Navbar() {
 
   return (
     <header className="bg-white/95 backdrop-blur-md border-b border-gray-200/90 sticky top-0 z-40 shadow-sm safe-top">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-18">
           {/* Brand Logo & Title */}
-          <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden bg-[#0e2617] p-0.5 shadow-md group-hover:scale-105 transition-transform flex-shrink-0 flex items-center justify-center border border-amber-500/30">
+          <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3.5 group">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl overflow-hidden bg-[#0e2617] p-0.5 shadow-md group-hover:scale-105 transition-transform flex-shrink-0 flex items-center justify-center border border-amber-500/40">
               <Image
                 src="/icons/logo.png"
                 alt="Engineer Division Logo"
-                width={44}
-                height={44}
+                width={48}
+                height={48}
                 className="w-full h-full object-contain"
                 priority
               />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center space-x-1.5">
-                <span className="text-sm sm:text-base font-extrabold text-gray-900 leading-tight tracking-tight">
+                <span className="text-base sm:text-lg font-black text-slate-900 leading-tight tracking-tight">
                   Engineer Division
                 </span>
-                <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-md bg-[#0e2617] text-amber-400 border border-amber-500/30">
+                <span className="text-xs font-black px-2 py-0.5 rounded-lg bg-[#0e2617] text-amber-400 border border-amber-500/30">
                   iPonchor
                 </span>
               </div>
-              <span className="text-[11px] sm:text-xs text-gray-500 font-medium tracking-tight truncate max-w-[200px] sm:max-w-none">
-                Personnel Information System • กองพลทหารช่าง
+              <span className="text-xs sm:text-sm text-slate-500 font-semibold tracking-tight truncate max-w-[210px] sm:max-w-none">
+                กองพลทหารช่าง • ระบบสารสนเทศกำลังพล
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links: Filtered based on User vs Admin */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <div className="hidden md:flex items-center space-x-1.5 lg:space-x-2.5">
             {currentNavLinks.map((link) => {
               const Icon = link.icon;
               const active = isActive(link.href);
@@ -93,13 +93,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-base font-bold transition-all ${
                     active
                       ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
-                  <Icon className={`w-4.5 h-4.5 ${active ? 'text-amber-400' : 'text-gray-500'}`} />
+                  <Icon className={`w-5 h-5 ${active ? 'text-amber-400' : 'text-slate-500'}`} />
                   <span>{link.label}</span>
                 </Link>
               );
@@ -111,7 +111,7 @@ export default function Navbar() {
             {/* Supabase Status Pill */}
             {supabaseConnected ? (
               <div 
-                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"
+                className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"
                 title="เชื่อมต่อ Supabase Live Database สำเร็จ"
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -119,10 +119,10 @@ export default function Navbar() {
               </div>
             ) : (
               <div 
-                className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300"
+                className="hidden lg:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 border border-slate-300"
                 title="โหมด Local Demo Sync"
               >
-                <ShieldAlert className="w-4 h-4 text-slate-500" />
+                <ShieldAlert className="w-4.5 h-4.5 text-slate-500" />
                 <span>Demo Sync</span>
               </div>
             )}
@@ -131,24 +131,24 @@ export default function Navbar() {
             {user ? (
               <Link
                 href="/settings/profile"
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-xs sm:text-sm font-bold text-gray-800 transition-colors shadow-2xs"
+                className="flex items-center space-x-2 px-3.5 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-sm sm:text-base font-bold text-slate-800 transition-colors shadow-2xs active:scale-95"
                 title="แตะเพื่อจัดการตั้งค่าผู้ใช้"
               >
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold text-white ${
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-black text-white ${
                   isAdmin ? 'bg-slate-900 text-amber-400' : 'bg-blue-600'
                 }`}>
                   {isAdmin ? 'A' : 'U'}
                 </div>
-                <span className="truncate max-w-[85px] sm:max-w-[130px]">
+                <span className="truncate max-w-[100px] sm:max-w-[140px]">
                   {isAdmin ? 'Admin' : 'User'}
                 </span>
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-slate-800 transition-colors"
+                className="flex items-center space-x-2 px-4 py-2.5 rounded-full bg-slate-900 text-white text-sm sm:text-base font-bold hover:bg-slate-800 transition-colors active:scale-95 shadow-xs"
               >
-                <LogIn className="w-4 h-4" />
+                <LogIn className="w-4.5 h-4.5" />
                 <span>เข้าสู่ระบบ</span>
               </Link>
             )}

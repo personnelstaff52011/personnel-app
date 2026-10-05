@@ -154,24 +154,24 @@ export default function UserProfileSettingsPage() {
       <div className="flex items-center space-x-3">
         <Link
           href="/"
-          className="p-2.5 rounded-2xl bg-white border border-gray-200 text-gray-700 hover:text-gray-900 shadow-xs transition-colors"
+          className="p-3 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-xs transition-colors active:scale-95"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </Link>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             ตั้งค่าผู้ใช้งาน (User Settings)
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-0.5">
             ข้อมูลกำลังพลส่วนตัวและความปลอดภัยของบัญชี
           </p>
         </div>
       </div>
 
       {/* User Header Card */}
-      <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs">
+      <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs">
         <div className="flex items-center space-x-4">
-          <div className="relative w-20 h-25 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center shadow-xs">
+          <div className="relative w-22 h-28 sm:w-24 sm:h-30 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0 flex items-center justify-center shadow-xs">
             {personnelData?.photo_url || user?.photo_url ? (
               <Image
                 src={personnelData?.photo_url || user?.photo_url || ''}
@@ -181,25 +181,25 @@ export default function UserProfileSettingsPage() {
                 unoptimized
               />
             ) : (
-              <User className="w-9 h-9 text-gray-400" />
+              <User className="w-10 h-10 text-slate-400" />
             )}
           </div>
 
           <div className="min-w-0 flex-1">
-            <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 truncate">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 truncate">
               {formatFullNameTh(rankTh, firstNameTh, lastNameTh) || user?.displayName || 'กำลังพล'}
             </h2>
-            <div className="flex items-center space-x-2 mt-1.5">
-              <span className={`inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+            <div className="flex items-center space-x-2 mt-2">
+              <span className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold ${
                 isAdmin 
                   ? 'bg-slate-900 text-amber-400' 
                   : 'bg-blue-50 text-blue-700 border border-blue-200'
               }`}>
-                {isAdmin ? <ShieldCheck className="w-4 h-4 text-amber-400" /> : <User className="w-4 h-4" />}
+                {isAdmin ? <ShieldCheck className="w-4.5 h-4.5 text-amber-400" /> : <User className="w-4.5 h-4.5" />}
                 <span>{isAdmin ? 'ผู้ดูแลระบบ (Admin)' : 'ผู้ใช้งานทั่วไป (User)'}</span>
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1 truncate">
+            <p className="text-sm sm:text-base text-slate-500 font-semibold mt-1.5 truncate">
               {personnelData?.department || user?.department || 'กองพลทหารช่าง'}
             </p>
           </div>
@@ -207,36 +207,36 @@ export default function UserProfileSettingsPage() {
       </div>
 
       {/* Profile Edit Form: STRICTLY ONLY ALLOWED FIELDS (ยศ, ชื่อ, นามสกุล, ชื่อเล่น, หมายเลขโทรศัพท์) */}
-      <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-4">
-        <div className="border-b border-gray-100 pb-3">
-          <h3 className="text-base font-bold text-gray-900 flex items-center space-x-2">
+      <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="border-b border-slate-100 pb-3.5">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center space-x-2">
             <User className="w-5 h-5 text-blue-600" />
             <span>แก้ไขข้อมูลส่วนตัวของตนเอง</span>
           </h3>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
             อนุญาตให้แก้ไขได้เฉพาะ ยศ ชื่อ สกุล ชื่อเล่น และเบอร์โทรศัพท์
           </p>
         </div>
 
         {profileSuccessMsg && (
-          <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs sm:text-sm text-emerald-800 flex items-center space-x-2">
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-sm sm:text-base font-bold text-emerald-800 flex items-center space-x-2.5">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
             <span>{profileSuccessMsg}</span>
           </div>
         )}
 
         {profileErrorMsg && (
-          <div className="p-3.5 bg-red-50 border border-red-200 rounded-2xl text-xs sm:text-sm text-red-700 flex items-center space-x-2">
+          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-sm sm:text-base font-bold text-red-700 flex items-center space-x-2.5">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
             <span>{profileErrorMsg}</span>
           </div>
         )}
 
-        <form onSubmit={handleProfileSubmit} className="space-y-4 text-sm">
+        <form onSubmit={handleProfileSubmit} className="space-y-4">
           {/* 1. ยศ, ชื่อ, สกุล ภาษาไทย (3 ฟิลด์แยกกัน) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">
                 ยศ (ไทย)
               </label>
               <input
@@ -244,11 +244,11 @@ export default function UserProfileSettingsPage() {
                 value={rankTh}
                 onChange={(e) => setRankTh(e.target.value)}
                 placeholder="เช่น พ.ท. หรือ ส.อ."
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">
                 ชื่อ (ไทย) *
               </label>
               <input
@@ -257,11 +257,11 @@ export default function UserProfileSettingsPage() {
                 onChange={(e) => setFirstNameTh(e.target.value)}
                 placeholder="เช่น นฤเบศร์"
                 required
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">
                 สกุล (ไทย) *
               </label>
               <input
@@ -270,7 +270,7 @@ export default function UserProfileSettingsPage() {
                 onChange={(e) => setLastNameTh(e.target.value)}
                 placeholder="เช่น บุญคุ้ม"
                 required
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
           </div>
@@ -278,7 +278,7 @@ export default function UserProfileSettingsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {/* 2. ชื่อเล่น */}
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">
                 ชื่อเล่น (nickname)
               </label>
               <input
@@ -286,23 +286,23 @@ export default function UserProfileSettingsPage() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="เช่น สอง"
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
 
             {/* 3. หมายเลขโทรศัพท์ */}
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">
                 หมายเลขโทรศัพท์ติดต่อ (phone_number)
               </label>
               <div className="relative">
-                <Phone className="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Phone className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                 <input
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="เช่น 081-892-3412"
-                  className="w-full pl-11 pr-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  className="w-full pl-12 pr-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
                 />
               </div>
             </div>
@@ -311,64 +311,64 @@ export default function UserProfileSettingsPage() {
           {/* 4. ยศ / ชื่อ / นามสกุล ภาษาอังกฤษ */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">RANK (EN)</label>
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">RANK (EN)</label>
               <input
                 type="text"
                 value={rankEn}
                 onChange={(e) => setRankEn(e.target.value)}
                 placeholder="เช่น LTC"
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">NAME (EN)</label>
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">NAME (EN)</label>
               <input
                 type="text"
                 value={firstNameEn}
                 onChange={(e) => setFirstNameEn(e.target.value)}
                 placeholder="เช่น NARUBES"
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-gray-800 font-bold mb-1.5">LASTNAME (EN)</label>
+              <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">LASTNAME (EN)</label>
               <input
                 type="text"
                 value={lastNameEn}
                 onChange={(e) => setLastNameEn(e.target.value)}
                 placeholder="เช่น BOONKOOM"
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
           </div>
 
           {/* Locked / Read-Only Fields Section */}
-          <div className="mt-5 pt-3.5 border-t border-gray-100">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2.5">
+          <div className="mt-5 pt-3.5 border-t border-slate-100">
+            <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider block mb-2.5">
               🔒 ข้อมูลประจำตำแหน่งและรหัสทางราชการ (สงวนสิทธิ์แก้ไขโดย Admin เท่านั้น)
             </span>
-            <div className="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
-              <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                <span className="text-xs text-gray-400 block font-medium">เลขประจำตัวประชาชน</span>
-                <span className="font-mono font-bold text-gray-800 text-sm">
+            <div className="grid grid-cols-2 gap-2.5 text-sm">
+              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <span className="text-xs text-slate-400 block font-semibold">เลขประจำตัวประชาชน</span>
+                <span className="font-mono font-bold text-slate-900 text-sm sm:text-base">
                   {personnelData?.citizen_id || user?.citizen_id || '-'}
                 </span>
               </div>
-              <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                <span className="text-xs text-gray-400 block font-medium">เลขประจำตัวทหาร</span>
-                <span className="font-mono font-bold text-gray-800 text-sm">
+              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <span className="text-xs text-slate-400 block font-semibold">เลขประจำตัวทหาร</span>
+                <span className="font-mono font-bold text-slate-900 text-sm sm:text-base">
                   {personnelData?.military_id || user?.military_id || '-'}
                 </span>
               </div>
-              <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                <span className="text-xs text-gray-400 block font-medium">ตำแหน่ง</span>
-                <span className="font-bold text-gray-800 truncate block text-sm">
+              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <span className="text-xs text-slate-400 block font-semibold">ตำแหน่ง</span>
+                <span className="font-bold text-slate-900 truncate block text-sm sm:text-base">
                   {personnelData?.regular_position || '-'}
                 </span>
               </div>
-              <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                <span className="text-xs text-gray-400 block font-medium">สังกัด / กองร้อย</span>
-                <span className="font-bold text-gray-800 truncate block text-sm">
+              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <span className="text-xs text-slate-400 block font-semibold">สังกัด / กองร้อย</span>
+                <span className="font-bold text-slate-900 truncate block text-sm sm:text-base">
                   {personnelData?.department || '-'}
                 </span>
               </div>
@@ -378,7 +378,7 @@ export default function UserProfileSettingsPage() {
           <button
             type="submit"
             disabled={isSavingProfile}
-            className="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm sm:text-base shadow-xs transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center space-x-2 mt-3"
+            className="w-full py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-base sm:text-lg shadow-md transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center space-x-2 mt-4"
           >
             {isSavingProfile ? (
               <Loader2 className="w-5 h-5 animate-spin text-white" />
@@ -391,58 +391,58 @@ export default function UserProfileSettingsPage() {
       </div>
 
       {/* Password Change Box */}
-      <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-3.5">
-        <div className="border-b border-gray-100 pb-3">
-          <h3 className="text-base font-bold text-gray-900 flex items-center space-x-2">
+      <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="border-b border-slate-100 pb-3.5">
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center space-x-2">
             <KeyRound className="w-5 h-5 text-amber-600" />
             <span>เปลี่ยนรหัสผ่านส่วนตัว</span>
           </h3>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
             กำหนดรหัสผ่านใหม่สำหรับการเข้าสู่ระบบในครั้งถัดไป
           </p>
         </div>
 
         {passwordSuccessMsg && (
-          <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs sm:text-sm text-emerald-800 flex items-center space-x-2">
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-sm sm:text-base font-bold text-emerald-800 flex items-center space-x-2.5">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
             <span>{passwordSuccessMsg}</span>
           </div>
         )}
 
         {passwordErrorMsg && (
-          <div className="p-3.5 bg-red-50 border border-red-200 rounded-2xl text-xs sm:text-sm text-red-700 flex items-center space-x-2">
+          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-sm sm:text-base font-bold text-red-700 flex items-center space-x-2.5">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
             <span>{passwordErrorMsg}</span>
           </div>
         )}
 
-        <form onSubmit={handlePasswordSubmit} className="space-y-3.5 text-sm">
+        <form onSubmit={handlePasswordSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-800 font-bold mb-1.5">รหัสผ่านใหม่ (New Password) *</label>
+            <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">รหัสผ่านใหม่ (New Password) *</label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="กำหนดรหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร"
               required
-              className="w-full px-3.5 py-3 rounded-2xl border border-gray-200 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
             />
           </div>
           <div>
-            <label className="block text-gray-800 font-bold mb-1.5">ยืนยันรหัสผ่านใหม่อีกครั้ง *</label>
+            <label className="block text-slate-800 font-bold mb-2 text-base sm:text-lg">ยืนยันรหัสผ่านใหม่อีกครั้ง *</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="กรอกรหัสผ่านใหม่อีกครั้ง"
               required
-              className="w-full px-3.5 py-3 rounded-2xl border border-gray-200 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
             />
           </div>
           <button
             type="submit"
             disabled={isChangingPass}
-            className="w-full py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-sm sm:text-base transition-all active:scale-95 disabled:opacity-50"
+            className="w-full py-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-base sm:text-lg transition-all active:scale-95 disabled:opacity-50"
           >
             {isChangingPass ? 'กำลังบันทึก...' : 'บันทึกรหัสผ่านใหม่'}
           </button>
@@ -454,7 +454,7 @@ export default function UserProfileSettingsPage() {
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full py-3.5 rounded-2xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-sm sm:text-base flex items-center justify-center space-x-2 transition-all active:scale-95"
+          className="w-full py-4 rounded-2xl bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 font-black text-base sm:text-lg flex items-center justify-center space-x-2 transition-all active:scale-95"
         >
           <LogOut className="w-5 h-5" />
           <span>ออกจากระบบ (Sign Out)</span>

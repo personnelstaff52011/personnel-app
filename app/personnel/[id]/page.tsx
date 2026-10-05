@@ -154,20 +154,20 @@ export default function PersonnelDetailPage() {
     return (
       <div 
         onClick={() => valStr !== '-' && handleCopy(valStr, label)}
-        className="bg-white border border-gray-200/80 rounded-2xl p-3.5 sm:p-4 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-blue-300 transition-all cursor-pointer relative group active:scale-[0.99]"
+        className="bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:border-blue-300 transition-all cursor-pointer relative group active:scale-[0.99]"
       >
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-xs font-bold text-gray-500 uppercase tracking-tight">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-tight">
             {label}
           </span>
           {valStr !== '-' && (
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
-              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400">
+              {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
             </span>
           )}
         </div>
-        <div className="text-sm sm:text-base font-bold text-gray-900 break-words flex items-center justify-between">
-          <span className={label === 'กลุ่มเลือด' ? 'text-red-600 font-extrabold text-base sm:text-lg' : ''}>
+        <div className="text-base sm:text-lg md:text-xl font-black text-slate-900 break-words flex items-center justify-between">
+          <span className={label === 'กลุ่มเลือด' ? 'text-red-600 font-black text-xl sm:text-2xl' : ''}>
             {valStr}
           </span>
         </div>
@@ -178,29 +178,29 @@ export default function PersonnelDetailPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-4 pb-28 md:pb-12">
       {/* 1. Mobile-friendly Top Navigation & Breadcrumb */}
-      <div className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-gray-200/90 shadow-xs">
+      <div className="flex items-center justify-between bg-white px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-xs">
         <Link 
           href="/personnel" 
-          className="inline-flex items-center space-x-2 text-sm font-bold text-slate-800 hover:text-blue-600 transition-colors p-1"
+          className="inline-flex items-center space-x-2 text-base font-bold text-slate-800 hover:text-blue-600 transition-colors p-1"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           <span>รายชื่อทั้งหมด</span>
         </Link>
-        <div className="flex items-center space-x-1.5 text-sm text-gray-500">
+        <div className="flex items-center space-x-2 text-sm sm:text-base text-slate-500 font-medium">
           <span>ลำดับ</span>
-          <span className="font-extrabold text-slate-900 bg-amber-100 text-amber-900 px-3 py-1 rounded-lg font-mono text-xs">
+          <span className="font-black text-slate-950 bg-amber-100 text-amber-950 px-3.5 py-1 rounded-xl font-mono text-sm sm:text-base border border-amber-300">
             No. {personnel.seq_no}
           </span>
         </div>
       </div>
 
       {/* Main Profile Card Container */}
-      <div className="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden p-5 sm:p-8">
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden p-5 sm:p-8">
         
         {/* 2. Centered Profile Header */}
         <div className="flex flex-col items-center text-center">
           {/* Rounded portrait photo */}
-          <div className="relative w-36 h-48 sm:w-48 sm:h-64 rounded-3xl overflow-hidden bg-gray-100 border-4 border-white shadow-xl flex items-center justify-center mb-3.5 ring-2 ring-gray-100">
+          <div className="relative w-40 h-52 sm:w-52 sm:h-68 rounded-3xl overflow-hidden bg-slate-100 border-4 border-white shadow-xl flex items-center justify-center mb-4 ring-2 ring-slate-100">
             {personnel.photo_url ? (
               <Image
                 src={personnel.photo_url}
@@ -211,34 +211,34 @@ export default function PersonnelDetailPage() {
                 unoptimized
               />
             ) : (
-              <div className="flex flex-col items-center justify-center text-gray-400 p-4">
-                <User className="w-16 h-16" />
-                <span className="text-xs text-gray-400 mt-1.5 font-medium">ไม่มีรูปถ่าย</span>
+              <div className="flex flex-col items-center justify-center text-slate-400 p-4">
+                <User className="w-16 h-16 sm:w-20 sm:h-20" />
+                <span className="text-xs sm:text-sm text-slate-400 mt-2 font-semibold">ไม่มีรูปถ่าย</span>
               </div>
             )}
           </div>
 
           {/* Thai Rank & Full Name */}
-          <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
             {personnel.full_name_th}
           </h1>
 
           {/* Nickname */}
           {personnel.nickname && (
-            <div className="mt-1.5 text-sm sm:text-base font-semibold text-gray-700 bg-gray-100 px-4 py-1 rounded-full inline-block">
-              ชื่อเล่น: <span className="text-gray-950 font-extrabold">{personnel.nickname}</span>
+            <div className="mt-2 text-base sm:text-lg font-bold text-slate-700 bg-slate-100 px-5 py-1.5 rounded-full inline-block">
+              ชื่อเล่น: <span className="text-slate-950 font-black">{personnel.nickname}</span>
             </div>
           )}
         </div>
 
         {/* Divider */}
-        <hr className="my-5 sm:my-8 border-gray-100" />
+        <hr className="my-5 sm:my-8 border-slate-100" />
 
         {/* Admin Quick Link to Display Fields Settings */}
         {isAdmin && (
-          <div className="mb-4 flex items-center justify-between bg-slate-50 border border-slate-200/90 rounded-2xl px-4 py-2.5 text-xs sm:text-sm">
-            <div className="flex items-center space-x-2 text-slate-800 font-bold">
-              <SlidersHorizontal className="w-4 h-4 text-blue-600" />
+          <div className="mb-4 flex items-center justify-between bg-slate-50 border border-slate-200/90 rounded-2xl px-4.5 py-3 text-sm sm:text-base">
+            <div className="flex items-center space-x-2.5 text-slate-800 font-bold">
+              <SlidersHorizontal className="w-4.5 h-4.5 text-blue-600" />
               <span>การ์ดฟิลด์ข้อมูลที่เปิดแสดงผล</span>
             </div>
             <Link
@@ -246,7 +246,7 @@ export default function PersonnelDetailPage() {
               className="text-blue-600 hover:text-blue-800 font-bold flex items-center space-x-1"
             >
               <span>ตั้งค่าเปิด/ปิดการ์ดฟิลด์</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4.5 h-4.5" />
             </Link>
           </div>
         )}

@@ -172,22 +172,22 @@ function ExcelImportComponent() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 pb-20 sm:pb-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
           <Link
             href="/personnel"
-            className="p-2 rounded-xl bg-white border border-gray-200 text-gray-600 hover:text-gray-900 shadow-sm transition-colors"
+            className="p-3 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-xs transition-colors active:scale-95"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </Link>
           <div>
-            <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight flex items-center space-x-2">
-              <FileSpreadsheet className="w-6 h-6 text-emerald-600" />
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center space-x-2">
+              <FileSpreadsheet className="w-7 h-7 text-emerald-600" />
               <span>นำเข้าข้อมูลกำลังพลจาก Excel (.xlsx / .csv)</span>
             </h1>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-sm sm:text-base text-slate-500 mt-0.5 font-medium">
               แปลงข้อมูลจากสเปรดชีตและบันทึกลงฐานข้อมูลแบบ Bulk Insert
             </p>
           </div>
@@ -197,15 +197,15 @@ function ExcelImportComponent() {
         <button
           type="button"
           onClick={handleDownloadTemplate}
-          className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-gray-200 text-xs sm:text-sm font-semibold shadow-sm transition-all"
+          className="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-sm sm:text-base font-bold shadow-xs transition-all active:scale-95"
         >
-          <Download className="w-4 h-4 text-emerald-600" />
+          <Download className="w-5 h-5 text-emerald-600" />
           <span>ดาวน์โหลดแม่แบบ Excel</span>
         </button>
       </div>
 
       {/* Upload Dropzone */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm">
+      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
         <input
           type="file"
           ref={fileInputRef}
@@ -216,22 +216,22 @@ function ExcelImportComponent() {
 
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-gray-300 hover:border-emerald-500 bg-gray-50/50 hover:bg-emerald-50/20 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all"
+          className="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60 hover:bg-emerald-50/20 rounded-3xl p-8 sm:p-12 text-center cursor-pointer transition-all active:scale-[0.99]"
         >
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3 shadow-inner">
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3 shadow-inner">
             <UploadCloud className="w-8 h-8" />
           </div>
-          <h3 className="text-base font-bold text-gray-800">
-            {fileName ? fileName : 'คลิกเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่'}
+          <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            {fileName ? fileName : 'แตะเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่'}
           </h3>
-          <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
+          <p className="text-sm sm:text-base text-slate-500 mt-1 max-w-sm mx-auto font-medium">
             รองรับไฟล์ Microsoft Excel (.xlsx, .xls) หรือไฟล์ข้อความ Comma-Separated (.csv)
           </p>
         </div>
 
         {errorMsg && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-2xl text-sm sm:text-base text-red-700 flex items-center space-x-2.5 font-bold">
+            <AlertCircle className="w-5 h-5 flex-shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
@@ -239,11 +239,11 @@ function ExcelImportComponent() {
 
       {/* Data Preview Table */}
       {parsedData.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden p-6 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs overflow-hidden p-6 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div className="flex items-center space-x-2">
-              <Table className="w-5 h-5 text-slate-700" />
-              <h2 className="text-base font-bold text-gray-900">
+              <Table className="w-6 h-6 text-slate-700" />
+              <h2 className="text-lg sm:text-xl font-black text-slate-900">
                 ตัวอย่างข้อมูลที่ตรวจพบ ({parsedData.length} รายการ)
               </h2>
             </div>
@@ -251,21 +251,21 @@ function ExcelImportComponent() {
               <button
                 type="button"
                 onClick={handleClear}
-                className="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-600 hover:bg-gray-100 flex items-center space-x-1"
+                className="px-4 py-2.5 rounded-2xl border border-slate-300 text-sm font-bold text-slate-700 hover:bg-slate-100 flex items-center space-x-1.5 active:scale-95 transition-all"
               >
-                <Trash2 className="w-3.5 h-3.5" />
+                <Trash2 className="w-4 h-4" />
                 <span>ล้างไฟล์</span>
               </button>
               <button
                 type="button"
                 onClick={handleConfirmImport}
                 disabled={isSubmitting}
-                className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow transition-all disabled:opacity-50"
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm sm:text-base font-black shadow-md transition-all active:scale-95 disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircle2 className="w-5 h-5" />
                 )}
                 <span>
                   {isSubmitting ? 'กำลังบันทึกลงฐานข้อมูล...' : `ยืนยันนำเข้า ${parsedData.length} รายการ`}
@@ -275,41 +275,41 @@ function ExcelImportComponent() {
           </div>
 
           <div className="overflow-x-auto max-h-96">
-            <table className="w-full text-left text-xs text-gray-700">
-              <thead className="bg-slate-50 border-b border-gray-200 text-[11px] uppercase font-semibold text-gray-500 sticky top-0">
+            <table className="w-full text-left text-sm text-slate-800">
+              <thead className="bg-slate-50 border-b border-slate-200 text-xs sm:text-sm font-black text-slate-700 sticky top-0">
                 <tr>
-                  <th className="px-3 py-2.5 text-center">ลำดับ</th>
-                  <th className="px-3 py-2.5">ยศ ชื่อ-นามสกุล</th>
-                  <th className="px-3 py-2.5">RANK / NAME (EN)</th>
-                  <th className="px-3 py-2.5">ตำแหน่ง</th>
-                  <th className="px-3 py-2.5">ส่วนงาน</th>
-                  <th className="px-2 py-2.5 text-center">เลือด</th>
-                  <th className="px-3 py-2.5">เบอร์โทร</th>
+                  <th className="px-3.5 py-3 text-center">ลำดับ</th>
+                  <th className="px-3.5 py-3">ยศ ชื่อ-นามสกุล</th>
+                  <th className="px-3.5 py-3">RANK / NAME (EN)</th>
+                  <th className="px-3.5 py-3">ตำแหน่ง</th>
+                  <th className="px-3.5 py-3">ส่วนงาน</th>
+                  <th className="px-3 py-3 text-center">เลือด</th>
+                  <th className="px-3.5 py-3">เบอร์โทร</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-slate-100">
                 {parsedData.map((row, idx) => (
                   <tr key={idx} className="hover:bg-slate-50">
-                    <td className="px-3 py-2 text-center font-bold text-gray-700">
+                    <td className="px-3.5 py-2.5 text-center font-black text-slate-700">
                       {row.seq_no}
                     </td>
-                    <td className="px-3 py-2 font-medium text-gray-900 whitespace-nowrap">
+                    <td className="px-3.5 py-2.5 font-bold text-slate-900 whitespace-nowrap text-base">
                       {row.full_name_th || <span className="text-red-500">ไม่มีชื่อ (ข้าม)</span>}
-                      {row.nickname && <span className="text-gray-400 ml-1">({row.nickname})</span>}
+                      {row.nickname && <span className="text-slate-500 ml-1 font-medium">({row.nickname})</span>}
                     </td>
-                    <td className="px-3 py-2 font-mono text-gray-500 whitespace-nowrap">
+                    <td className="px-3.5 py-2.5 font-mono text-slate-500 whitespace-nowrap text-sm">
                       {row.rank_en} {row.first_name_en} {row.last_name_en}
                     </td>
-                    <td className="px-3 py-2 text-gray-600 whitespace-nowrap">
+                    <td className="px-3.5 py-2.5 text-slate-700 whitespace-nowrap font-medium">
                       {row.regular_position || '-'}
                     </td>
-                    <td className="px-3 py-2 text-gray-600 whitespace-nowrap">
+                    <td className="px-3.5 py-2.5 text-slate-700 whitespace-nowrap font-medium">
                       {row.department || '-'}
                     </td>
-                    <td className="px-2 py-2 text-center font-bold text-red-600 whitespace-nowrap">
+                    <td className="px-3 py-2.5 text-center font-black text-red-600 whitespace-nowrap">
                       {row.blood_group || '-'}
                     </td>
-                    <td className="px-3 py-2 font-mono text-gray-600 whitespace-nowrap">
+                    <td className="px-3.5 py-2.5 font-mono text-slate-700 whitespace-nowrap font-medium">
                       {row.phone_number || '-'}
                     </td>
                   </tr>

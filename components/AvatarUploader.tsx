@@ -65,7 +65,7 @@ export default function AvatarUploader({ currentUrl, onUrlChange }: AvatarUpload
 
   return (
     <div className="w-full">
-      <label className="block text-sm font-semibold text-gray-700 mb-2">
+      <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2.5">
         รูปถ่ายหน้าตรงข้าราชการ (Official Portrait Photo)
       </label>
 
@@ -77,10 +77,10 @@ export default function AvatarUploader({ currentUrl, onUrlChange }: AvatarUpload
         }}
         onDragLeave={() => setIsDragOver(false)}
         onDrop={handleDrop}
-        className={`relative border-2 border-dashed rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer transition-all duration-200 ${
+        className={`relative border-2 border-dashed rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-center gap-6 cursor-pointer transition-all duration-200 active:scale-[0.99] ${
           isDragOver
             ? 'border-blue-500 bg-blue-50/50'
-            : 'border-gray-300 hover:border-gray-400 bg-gray-50/50'
+            : 'border-slate-300 hover:border-slate-400 bg-slate-50/60'
         }`}
       >
         <input
@@ -92,7 +92,7 @@ export default function AvatarUploader({ currentUrl, onUrlChange }: AvatarUpload
         />
 
         {/* Image Preview Box */}
-        <div className="relative w-32 h-40 rounded-xl overflow-hidden bg-gray-200 border-2 border-white shadow-md flex-shrink-0 flex items-center justify-center">
+        <div className="relative w-36 h-48 rounded-2xl overflow-hidden bg-slate-200 border-2 border-white shadow-md flex-shrink-0 flex items-center justify-center">
           {preview ? (
             <Image
               src={preview}
@@ -102,15 +102,15 @@ export default function AvatarUploader({ currentUrl, onUrlChange }: AvatarUpload
               unoptimized
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-gray-400">
-              <User className="w-12 h-12" />
-              <span className="text-[10px] mt-1 text-gray-400">ยังไม่มีรูป</span>
+            <div className="flex flex-col items-center justify-center text-slate-400">
+              <User className="w-14 h-14" />
+              <span className="text-xs mt-1 font-bold text-slate-400">ยังไม่มีรูป</span>
             </div>
           )}
 
           {isUploading && (
-            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-xs">
-              <Loader2 className="w-6 h-6 animate-spin mb-1 text-blue-400" />
+            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white text-sm font-bold">
+              <Loader2 className="w-8 h-8 animate-spin mb-1.5 text-blue-400" />
               <span>กำลังอัปโหลด...</span>
             </div>
           )}
@@ -119,25 +119,25 @@ export default function AvatarUploader({ currentUrl, onUrlChange }: AvatarUpload
             <button
               type="button"
               onClick={handleRemove}
-              className="absolute top-1.5 right-1.5 p-1 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-md transition-colors"
+              className="absolute top-2 right-2 p-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-md transition-colors active:scale-95"
               title="ลบรูปภาพ"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
         {/* Instructions */}
-        <div className="text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start space-x-2 text-sm font-semibold text-gray-800">
-            <Upload className="w-4 h-4 text-blue-600" />
-            <span>ลากไฟล์รูปภาพมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</span>
+        <div className="text-center sm:text-left space-y-1.5">
+          <div className="flex items-center justify-center sm:justify-start space-x-2 text-base sm:text-lg font-black text-slate-800">
+            <Upload className="w-5 h-5 text-blue-600" />
+            <span>แตะเพื่อเลือกรูป หรือลากไฟล์มาวางที่นี่</span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-sm text-slate-500 font-medium">
             รองรับไฟล์ PNG, JPG หรือ WebP (แนะนำรูปหน้าตรง พื้นหลังสุภาพ)
           </p>
-          <div className="mt-2.5 inline-block text-[11px] font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">
-            📦 จัดเก็บอัตโนมัติที่ Supabase Bucket: <code className="font-mono">personnel-avatars</code>
+          <div className="mt-2 inline-block text-xs font-semibold text-blue-700 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
+            📦 จัดเก็บอัตโนมัติที่ Supabase Bucket: <code className="font-mono font-bold">personnel-avatars</code>
           </div>
         </div>
       </div>

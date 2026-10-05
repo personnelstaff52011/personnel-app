@@ -24,34 +24,34 @@ export default function PersonnelTable({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200/90 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-gray-700">
-          <thead className="bg-slate-50 border-b border-gray-200 text-xs sm:text-sm font-bold text-gray-700">
+        <table className="w-full text-left text-base text-slate-800">
+          <thead className="bg-slate-50 border-b border-slate-200 text-sm sm:text-base font-black text-slate-800">
             <tr>
-              <th scope="col" className="px-4 py-3.5 text-center w-14">ลำดับ</th>
-              <th scope="col" className="px-3 py-3.5 w-16">รูปถ่าย</th>
-              <th scope="col" className="px-4 py-3.5">ยศ ชื่อ-นามสกุล (ไทย / อังกฤษ)</th>
-              <th scope="col" className="px-4 py-3.5">ตำแหน่ง</th>
-              <th scope="col" className="px-4 py-3.5">ส่วนงาน/กองร้อย</th>
-              <th scope="col" className="px-3 py-3.5 text-center">กลุ่มเลือด</th>
-              <th scope="col" className="px-4 py-3.5">เบอร์ติดต่อ</th>
-              <th scope="col" className="px-4 py-3.5 text-right w-24">จัดการ</th>
+              <th scope="col" className="px-4 py-4 text-center w-16">ลำดับ</th>
+              <th scope="col" className="px-3 py-4 w-18">รูปถ่าย</th>
+              <th scope="col" className="px-4 py-4">ยศ ชื่อ-นามสกุล (ไทย / อังกฤษ)</th>
+              <th scope="col" className="px-4 py-4">ตำแหน่ง</th>
+              <th scope="col" className="px-4 py-4">ส่วนงาน/กองร้อย</th>
+              <th scope="col" className="px-3 py-4 text-center">กลุ่มเลือด</th>
+              <th scope="col" className="px-4 py-4">เบอร์ติดต่อ</th>
+              <th scope="col" className="px-4 py-4 text-right w-28">จัดการ</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100">
             {personnelList.map((p) => (
               <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
                 {/* Sequence No */}
-                <td className="px-4 py-3 text-center font-bold text-gray-800">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-xl bg-slate-100 text-slate-800 text-xs font-extrabold">
+                <td className="px-4 py-3.5 text-center font-bold text-slate-900">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-100 text-slate-900 text-sm font-black">
                     {p.seq_no}
                   </span>
                 </td>
 
                 {/* Avatar */}
-                <td className="px-3 py-3">
-                  <div className="relative w-10 h-12 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0">
+                <td className="px-3 py-3.5">
+                  <div className="relative w-12 h-14 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-2xs">
                     {p.photo_url ? (
                       <img
                         src={p.photo_url}
@@ -60,80 +60,80 @@ export default function PersonnelTable({
                         loading="lazy"
                       />
                     ) : (
-                      <User className="w-5 h-5 text-gray-400" />
+                      <User className="w-6 h-6 text-slate-400" />
                     )}
                   </div>
                 </td>
 
                 {/* Names */}
-                <td className="px-4 py-3">
-                  <div className="text-sm sm:text-base font-bold text-gray-900 flex items-center space-x-1.5 flex-wrap gap-1">
+                <td className="px-4 py-3.5">
+                  <div className="text-base sm:text-lg font-black text-slate-900 flex items-center space-x-2 flex-wrap gap-1">
                     <Link href={`/personnel/${p.id}`} className="hover:text-blue-600 transition-colors">
                       {p.full_name_th || [p.rank_th, p.first_name_th, p.last_name_th].filter(Boolean).join(' ')}
                     </Link>
                     {p.nickname && (
-                      <span className="text-xs sm:text-sm text-gray-500 font-medium">
+                      <span className="text-sm sm:text-base text-slate-500 font-bold">
                         ({p.nickname})
                       </span>
                     )}
                     {p.duty_status === 'ช่วยราชการ' && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-300">
+                      <span className="text-xs font-black px-2.5 py-0.5 rounded-lg bg-amber-100 text-amber-800 border border-amber-300">
                         ช่วยราชการ
                       </span>
                     )}
                   </div>
-                  <div className="text-xs font-mono text-gray-400 mt-0.5">
+                  <div className="text-xs sm:text-sm font-mono text-slate-400 mt-0.5 font-medium">
                     {p.rank_en} {p.first_name_en} {p.last_name_en}
                   </div>
                 </td>
 
                 {/* Positions */}
-                <td className="px-4 py-3 text-xs sm:text-sm">
-                  <div className="text-gray-900 font-medium">
+                <td className="px-4 py-3.5 text-sm sm:text-base">
+                  <div className="text-slate-800 font-semibold">
                     {p.regular_position || '-'}
                   </div>
                 </td>
 
                 {/* Department */}
-                <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 whitespace-nowrap">
+                <td className="px-4 py-3.5 text-sm sm:text-base text-slate-700 whitespace-nowrap font-medium">
                   {p.department || '-'}
                 </td>
 
                 {/* Blood Group */}
-                <td className="px-3 py-3 text-center whitespace-nowrap">
+                <td className="px-3 py-3.5 text-center whitespace-nowrap">
                   {p.blood_group ? (
-                    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-red-50 text-red-700 border border-red-200">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-black bg-red-50 text-red-700 border border-red-200">
                       {p.blood_group}
                     </span>
                   ) : (
-                    <span className="text-xs text-gray-400">-</span>
+                    <span className="text-sm text-slate-400">-</span>
                   )}
                 </td>
 
                 {/* Phone */}
-                <td className="px-4 py-3 text-xs sm:text-sm font-mono whitespace-nowrap">
+                <td className="px-4 py-3.5 text-sm sm:text-base font-mono whitespace-nowrap">
                   {p.phone_number ? (
                     <a
                       href={`tel:${p.phone_number.replace(/[^0-9]/g, '')}`}
-                      className="text-gray-700 hover:text-emerald-700 flex items-center space-x-1 font-semibold"
+                      className="text-slate-800 hover:text-emerald-700 flex items-center space-x-1.5 font-bold"
                     >
-                      <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                      <Phone className="w-4 h-4 text-emerald-600" />
                       <span>{p.phone_number}</span>
                     </a>
                   ) : (
-                    <span className="text-gray-400">-</span>
+                    <span className="text-slate-400">-</span>
                   )}
                 </td>
 
                 {/* Actions */}
-                <td className="px-4 py-3 text-right whitespace-nowrap">
-                  <div className="flex items-center justify-end space-x-1">
+                <td className="px-4 py-3.5 text-right whitespace-nowrap">
+                  <div className="flex items-center justify-end space-x-1.5">
                     <Link
                       href={`/personnel/${p.id}`}
-                      className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors active:scale-95"
                       title="ดูโปรไฟล์"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-5 h-5" />
                     </Link>
 
                     {/* Admin-only Edit & Delete Actions */}
@@ -141,18 +141,18 @@ export default function PersonnelTable({
                       <>
                         <Link
                           href={`/personnel/${p.id}/edit`}
-                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                          className="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-xl transition-colors active:scale-95"
                           title="แก้ไข (Admin)"
                         >
-                          <Edit3 className="w-4 h-4" />
+                          <Edit3 className="w-5 h-5" />
                         </Link>
                         <button
                           type="button"
                           onClick={() => onDeleteRequest(p)}
-                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors active:scale-95"
                           title="ลบข้อมูล (Admin)"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </>
                     )}

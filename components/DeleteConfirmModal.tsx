@@ -25,41 +25,41 @@ export default function DeleteConfirmModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 relative">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-gray-100 relative space-y-4">
         <button
           onClick={onCancel}
           disabled={isDeleting}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-full transition-colors"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2 rounded-full transition-colors active:scale-95"
         >
-          <X className="w-5 h-5" />
+          <X className="w-6 h-6" />
         </button>
 
-        <div className="flex items-center space-x-3 text-red-600 mb-4">
-          <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
+        <div className="flex items-center space-x-3 text-red-600">
+          <div className="w-12 h-12 rounded-2xl bg-red-100 flex items-center justify-center flex-shrink-0">
+            <AlertTriangle className="w-6 h-6 text-red-600" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900">{title}</h3>
         </div>
 
-        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+        <p className="text-base text-slate-600 leading-relaxed font-medium">
           คุณต้องการลบข้อมูลกำลังพลนายนี้ออกจากระบบอย่างถาวรใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้
         </p>
 
-        <div className="bg-gray-50 rounded-xl p-3.5 border border-gray-200/80 mb-6">
-          <div className="text-xs text-gray-500">กำลังพลที่เลือก:</div>
-          <div className="font-bold text-gray-900 text-sm mt-0.5">{name}</div>
+        <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/80">
+          <div className="text-sm font-bold text-slate-500">กำลังพลที่เลือก:</div>
+          <div className="font-black text-slate-900 text-lg sm:text-xl mt-0.5">{name}</div>
           {serviceCode && (
-            <div className="text-xs font-mono text-gray-600 mt-0.5">รหัส: {serviceCode}</div>
+            <div className="text-sm font-mono text-slate-600 mt-0.5">รหัส: {serviceCode}</div>
           )}
         </div>
 
-        <div className="flex items-center justify-end space-x-3">
+        <div className="flex items-center justify-end space-x-3 pt-2">
           <button
             type="button"
             onClick={onCancel}
             disabled={isDeleting}
-            className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+            className="flex-1 sm:flex-none px-5 py-3.5 sm:py-4 rounded-2xl text-base font-bold text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200 active:scale-95 text-center"
           >
             ยกเลิก
           </button>
@@ -67,9 +67,9 @@ export default function DeleteConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={isDeleting}
-            className="flex items-center space-x-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors shadow-sm disabled:opacity-50"
+            className="flex-1 sm:flex-none flex items-center justify-center space-x-2 px-6 py-3.5 sm:py-4 rounded-2xl text-base font-black text-white bg-red-600 hover:bg-red-700 transition-all shadow-md active:scale-95 disabled:opacity-50"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-5 h-5" />
             <span>{isDeleting ? 'กำลังลบ...' : 'ยืนยันลบข้อมูล'}</span>
           </button>
         </div>

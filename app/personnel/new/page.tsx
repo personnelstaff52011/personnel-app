@@ -133,23 +133,23 @@ function NewPersonnelForm() {
       <div className="flex items-center space-x-3">
         <Link
           href="/personnel"
-          className="p-2.5 rounded-2xl bg-white border border-gray-200 text-gray-700 hover:text-gray-900 shadow-xs transition-colors"
+          className="p-3 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-xs transition-colors active:scale-95"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </Link>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             เพิ่มข้อมูลกำลังพลใหม่
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-0.5">
             กรอกข้อมูลทำเนียบกำลังพล กองพลทหารช่าง
           </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         {/* Photo Upload Section */}
-        <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs">
           <AvatarUploader
             currentUrl={formData.photo_url}
             onUrlChange={(url) => setFormData((prev) => ({ ...prev, photo_url: url }))}
@@ -157,15 +157,15 @@ function NewPersonnelForm() {
         </div>
 
         {/* Section 1: ข้อมูลรหัสประจำตัวและสังกัด */}
-        <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-4">
-          <div className="flex items-center space-x-2 text-base font-bold text-gray-900 border-b border-gray-100 pb-3">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="flex items-center space-x-2 text-lg sm:text-xl font-black text-slate-900 border-b border-slate-100 pb-3.5">
             <Building2 className="w-5 h-5 text-blue-600" />
             <span>ข้อมูลสังกัดและรหัสประจำตัว</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ลำดับหมายเลข (seq_no) *
               </label>
               <input
@@ -175,11 +175,11 @@ function NewPersonnelForm() {
                 value={formData.seq_no}
                 onChange={handleChange}
                 required
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ส่วนงาน / ฝ่าย / ตอน (department)
               </label>
               <input
@@ -188,18 +188,18 @@ function NewPersonnelForm() {
                 placeholder="เช่น ฝ่ายกำลังพล หรือ กองร้อยช่าง"
                 value={formData.department}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 สถานะกำลังพล (duty_status) *
               </label>
               <select
                 name="duty_status"
                 value={formData.duty_status}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
               >
                 <option value="บรรจุ">บรรจุ (ปกติ)</option>
                 <option value="ช่วยราชการ">ช่วยราชการ</option>
@@ -209,7 +209,7 @@ function NewPersonnelForm() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ตำแหน่งปกติ (regular_position)
               </label>
               <input
@@ -218,11 +218,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น รอง ผบ.พัน.ช.๕๒"
                 value={formData.regular_position}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ขั้นเงินเดือน (salary_step)
               </label>
               <input
@@ -231,15 +231,15 @@ function NewPersonnelForm() {
                 placeholder="เช่น น.๓/๑๘.๕"
                 value={formData.salary_step}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
           </div>
         </div>
 
         {/* Section 2: ข้อมูลส่วนตัวและยศ-ชื่อ-สกุล */}
-        <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-4">
-          <div className="flex items-center space-x-2 text-base font-bold text-gray-900 border-b border-gray-100 pb-3">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="flex items-center space-x-2 text-lg sm:text-xl font-black text-slate-900 border-b border-slate-100 pb-3.5">
             <User className="w-5 h-5 text-amber-600" />
             <span>ยศ ชื่อ-นามสกุล และข้อมูลบุคคล</span>
           </div>
@@ -247,7 +247,7 @@ function NewPersonnelForm() {
           {/* 1. ยศ, ชื่อ, สกุล ภาษาไทย */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ยศ (ไทย)
               </label>
               <input
@@ -256,11 +256,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น พ.ท. หรือ ส.อ."
                 value={formData.rank_th}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ชื่อ (ไทย) *
               </label>
               <input
@@ -270,11 +270,11 @@ function NewPersonnelForm() {
                 value={formData.first_name_th}
                 onChange={handleChange}
                 required
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 สกุล (ไทย) *
               </label>
               <input
@@ -284,14 +284,14 @@ function NewPersonnelForm() {
                 value={formData.last_name_th}
                 onChange={handleChange}
                 required
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ชื่อเล่น (nickname)
               </label>
               <input
@@ -300,14 +300,14 @@ function NewPersonnelForm() {
                 placeholder="เช่น สอง"
                 value={formData.nickname}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 RANK (EN)
               </label>
               <input
@@ -316,11 +316,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น LTC, MAJ, CPT"
                 value={formData.rank_en}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 NAME (EN)
               </label>
               <input
@@ -329,11 +329,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น NARUBES"
                 value={formData.first_name_en}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 LASTNAME (EN)
               </label>
               <input
@@ -342,14 +342,14 @@ function NewPersonnelForm() {
                 placeholder="เช่น BOONKOOM"
                 value={formData.last_name_en}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono uppercase focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 หมายเลขประจำตัวทหาร (military_id)
               </label>
               <input
@@ -359,11 +359,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น 1309900213"
                 value={formData.military_id}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 หมายเลขประจำตัวประชาชน (citizen_id)
               </label>
               <input
@@ -373,29 +373,29 @@ function NewPersonnelForm() {
                 placeholder="เช่น 1-7099-00124-91-2"
                 value={formData.citizen_id}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
           </div>
         </div>
 
         {/* Section 3: ข้อมูลทางการแพทย์และการติดต่อ */}
-        <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-4">
-          <div className="flex items-center space-x-2 text-base font-bold text-gray-900 border-b border-gray-100 pb-3">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="flex items-center space-x-2 text-lg sm:text-xl font-black text-slate-900 border-b border-slate-100 pb-3.5">
             <HeartHandshake className="w-5 h-5 text-red-600" />
             <span>ข้อมูลการแพทย์ การติดต่อ และเอกสาร</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 กลุ่มเลือด (blood_group)
               </label>
               <select
                 name="blood_group"
                 value={formData.blood_group}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
               >
                 <option value="A">A</option>
                 <option value="B">B</option>
@@ -404,7 +404,7 @@ function NewPersonnelForm() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 เบอร์ติดต่อ (phone_number)
               </label>
               <input
@@ -413,11 +413,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น 081-892-3412"
                 value={formData.phone_number}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 ศาสนา (religion)
               </label>
               <input
@@ -426,11 +426,11 @@ function NewPersonnelForm() {
                 placeholder="เช่น พุทธ, อิสลาม, คริสต์"
                 value={formData.religion}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                 วัน เดือน ปี เกิด (birth_date)
               </label>
               <input
@@ -438,7 +438,7 @@ function NewPersonnelForm() {
                 name="birth_date"
                 value={formData.birth_date}
                 onChange={handleChange}
-                className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
               />
             </div>
           </div>
@@ -446,8 +446,8 @@ function NewPersonnelForm() {
 
         {/* Section 4: Dynamic Custom Fields */}
         {fieldDefs.length > 0 && (
-          <div className="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-xs space-y-4">
-            <div className="flex items-center space-x-2 text-base font-bold text-gray-900 border-b border-gray-100 pb-3">
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs space-y-4">
+            <div className="flex items-center space-x-2 text-lg sm:text-xl font-black text-slate-900 border-b border-slate-100 pb-3.5">
               <FileText className="w-5 h-5 text-emerald-600" />
               <span>ข้อมูลเสริมเพิ่มเติม (Dynamic Fields)</span>
             </div>
@@ -455,7 +455,7 @@ function NewPersonnelForm() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {fieldDefs.map((def) => (
                 <div key={def.id}>
-                  <label className="block text-sm font-bold text-gray-800 mb-1.5">
+                  <label className="block text-base sm:text-lg font-bold text-slate-800 mb-2">
                     {def.field_label}
                   </label>
                   <input
@@ -464,7 +464,7 @@ function NewPersonnelForm() {
                     value={customFields[def.field_key] || ''}
                     onChange={(e) => handleCustomFieldChange(def.field_key, e.target.value)}
                     placeholder={`กรอก ${def.field_label}`}
-                    className="w-full px-3.5 py-3 rounded-2xl border border-gray-300 text-base focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full px-4 py-3.5 sm:py-4 rounded-2xl border border-slate-300 text-base sm:text-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
                   />
                 </div>
               ))}
@@ -476,14 +476,14 @@ function NewPersonnelForm() {
         <div className="flex items-center justify-end space-x-3 pt-2">
           <Link
             href="/personnel"
-            className="flex-1 sm:flex-none text-center px-5 py-3.5 rounded-2xl border border-gray-300 text-gray-700 text-sm sm:text-base font-bold hover:bg-gray-50 active:scale-95 transition-all"
+            className="flex-1 sm:flex-none text-center px-6 py-4 rounded-2xl border border-slate-300 text-slate-700 text-base sm:text-lg font-bold hover:bg-slate-50 active:scale-95 transition-all"
           >
             ยกเลิก
           </Link>
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-base font-extrabold shadow-md transition-all active:scale-95 disabled:opacity-50"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-base sm:text-lg font-black shadow-md transition-all active:scale-95 disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin text-white" />

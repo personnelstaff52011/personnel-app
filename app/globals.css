@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-sarabun: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-app: 'Prompt', 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * {
@@ -13,21 +13,26 @@
 }
 
 html, body {
-  font-family: var(--font-sarabun);
+  font-family: var(--font-app);
   background-color: #f8fafc;
-  color: #1e293b;
+  color: #0f172a;
   min-height: 100vh;
   touch-action: manipulation;
   overflow-x: hidden;
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 16.5px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensure mobile native feel: comfortable touch targets */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
 /* iOS Safe Area Utilities */
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 16px);
+  padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px);
 }
 
 .safe-top {
@@ -36,20 +41,25 @@ html, body {
 
 /* Ensure font size on mobile inputs is at least 16px to prevent iOS Safari auto-zoom */
 @media (max-width: 640px) {
+  html, body {
+    font-size: 17px;
+  }
+
   input[type="text"],
+  input[type="password"],
   input[type="number"],
   input[type="tel"],
   input[type="date"],
   select,
   textarea {
-    font-size: 16px !important;
+    font-size: 16.5px !important;
   }
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
